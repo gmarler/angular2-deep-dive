@@ -79,7 +79,8 @@ function compileTs(files, watchMode) {
         .pipe(sourcemaps.init())
         .pipe(ts(tsProject))
         .on('error', function () {
-            process.exit(1);
+          // Typescript always emits JS code even if its compiler isnt satisfied. Let's not stop it from continuing
+          // process.exit(1);
         });
     return res.js
         .pipe(sourcemaps.write('.', {
