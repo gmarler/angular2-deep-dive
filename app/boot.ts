@@ -8,7 +8,7 @@ import {Component} from '@angular/core';
 
 // Don't create components inside this file, and use better naming for the class, this is just q&d demo
 @Component({
-  selector: 'inspiring-quote',
+  selector: 'inspiring-phrase',
   template: `<h4>Quote:</h4>
   <p>Just remember, baby, you're the best!</p>
   `
