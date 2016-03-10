@@ -15,35 +15,30 @@
     <!-- endbuild -->
   </head>
   <body>
-    <main-app>
+    <itunes-browser>
       <i class="center-fix main-spinner fa fa-spin fa-spinner"></i>
-    </main-app>
+    </itunes-browser>
 
     <!-- build:js assets/bundle.js -->
     <!-- bower:js -->
     <script src="/bower_components/jquery/dist/jquery.js"></script>
     <script src="/bower_components/bootswatch-dist/js/bootstrap.js"></script>
     <!-- endinject -->
+    <!-- endbuild -->
 
-    <script src="node_modules/angular2/bundles/angular2-polyfills.js"></script>
-    <script src="node_modules/systemjs/dist/system-csp-production.js"></script>
+    <!-- Polyfill(s) for older browsers -->
+    <script src="node_modules/es6-shim/es6-shim.min.js"></script>
+
+    <script src="node_modules/zone.js/dist/zone.js"></script>
+    <script src="node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="node_modules/systemjs/dist/system.js"></script>
     <!-- endbuild -->
 
     <!-- build:remove -->
-    <script src="node_modules/rxjs/bundles/Rx.js"></script>
-    <script src="node_modules/angular2/bundles/angular2.dev.js"></script>
-    <script src="node_modules/angular2/bundles/router.dev.js"></script>
+    <script src="systemjs.conf.js"></script>
     <!-- endbuild -->
-    
+
     <script>
-      System.config({
-        packages: {
-          app: {
-            format: 'register',
-            defaultExtension: 'js'
-          }
-        }
-      });
       System.import('app/boot')
             .then(null, console.error.bind(console));
     </script>

@@ -4,3 +4,27 @@
 @import 'fonts';
 @import 'overrides';
 @import 'module';
+
+body {
+  background-color: color(quaternary);
+}
+
+header {
+  background-color: color(primary);
+  color: color(tertiary);
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  padding: 10px;
+  border-top: solid 1px;
+  width: 100%;
+  background-color: color(secondary);
+  color: color(tertiary);
+  font-size: 14px;
+  font-weight: bold;
+  img {
+    width: 20px;
+  }
+}
