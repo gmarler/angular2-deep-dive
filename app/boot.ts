@@ -14,5 +14,17 @@ import {Component} from '@angular/core';
 }) class MatSays {}
 
 // Once we've created our component, we'll boostrap the application
-bootstrap(ItunesAppComponent, []);
-bootstrap(MatSays, []);
+// Lots to learn about promises,
+// I have published a 2 hours course about it :)
+// https://www.packtpub.com/web-development/learning-javascript-promises-practical-applications-es6-and-angularjs-video
+bootstrap(ItunesAppComponent, [])
+  .then(function() {
+    console.log('Itunes Browser is ready to go');
+  }, function(err) {
+    console.error('Ouch, something went wrong', err);
+  });
+bootstrap(MatSays, []).then(function() {
+  console.log('Quotes app is ready to go');
+}, function(err) {
+  console.error('That s not inspiring...', err);
+});
