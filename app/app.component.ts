@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ElementRef} from '@angular/core';
 
 @Component({
   selector: 'itunes-browser',
@@ -6,13 +6,12 @@ import {Component} from '@angular/core';
 })
 export class ItunesAppComponent {
   public firstName: string = 'Schalk';
-  public lastName: any = 'Burger';
+  public lastName: string = 'Burger';
   constructor() {
-    // Anything goes
-    this.lastName = 2;
-    this.lastName = false;
-    this.lastName = [];
-    this.lastName = {};
+    this.lastName = 'e 04';
   }
-  fan() {}
+
+  fan() {
+    return `Go ${this.firstName}${this.lastName}!!!`;
+  }
 }
