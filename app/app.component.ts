@@ -5,8 +5,8 @@ import {Component} from '@angular/core';
   templateUrl: 'app/app.html'
 })
 export class ItunesAppComponent {
-  public firstName = 'Schalk';
-  public lastName = 'Burger';
+  public firstName: string = 'Schalk';
+  public lastName: string|number = 'Burger';
   constructor() {
     this.lastName = 2;
   }
