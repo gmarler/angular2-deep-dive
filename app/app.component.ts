@@ -5,11 +5,7 @@ import {Component} from '@angular/core';
   templateUrl: 'app/app.html'
 })
 export class ItunesAppComponent {
-  public firstName;
-  public lastName;
-  constructor() {
-    this.firstName = 'Schalk';
-    this.lastName = 'Burger';
-  }
+  public firstName = 'Schalk';
+  public lastName = 'Burger';
   fan() {}
 }
