@@ -6,4 +6,5 @@ import {Component} from '@angular/core';
   templateUrl: 'app/app.html'
 })
 export class ItunesAppComponent {
+  fan() {}
 }
