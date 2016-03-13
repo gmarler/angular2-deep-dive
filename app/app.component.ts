@@ -14,11 +14,11 @@ import {Component, ElementRef} from '@angular/core';
 export class ItunesAppComponent {
   public firstName: string = 'Schalk';
   public lastName: string = 'Burger';
-  constructor(elRef: ElementRef) {
+  constructor(private elRef: ElementRef) {
     this.lastName = 'e 04';
   }
 
   fan() {
-    return `Go ${this.firstName}${this.lastName}!!!`;
+    return `Go ${this.firstName}${this.lastName}!!! -- sent from ${this.elRef.nativeElement}`;
   }
 }
