@@ -6,9 +6,13 @@ import {Component} from '@angular/core';
 })
 export class ItunesAppComponent {
   public firstName: string = 'Schalk';
-  public lastName: string|number = 'Burger';
+  public lastName: any = 'Burger';
   constructor() {
+    // Anything goes
     this.lastName = 2;
+    this.lastName = false;
+    this.lastName = [];
+    this.lastName = {};
   }
   fan() {}
 }
