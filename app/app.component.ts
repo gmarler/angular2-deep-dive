@@ -1,5 +1,9 @@
 import {Component, ElementRef} from '@angular/core';
 
+interface Person {
+  firstName: string;
+  lastName: string;
+}
 
 @Component({
   selector: 'itunes-browser',
