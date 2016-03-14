@@ -7,5 +7,8 @@ import {Component} from '@angular/core';
 export class ItunesAppComponent {
   public firstName = 'Schalk';
   public lastName = 'Burger';
+  constructor() {
+    this.lastName = 2;
+  }
   fan() {}
 }
