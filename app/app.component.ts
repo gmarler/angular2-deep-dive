@@ -14,7 +14,7 @@ import {Component, ElementRef} from '@angular/core';
 export class ItunesAppComponent {
   public firstName: string = 'Schalk';
   public lastName: string = 'Burger';
-  constructor() {
+  constructor(elRef: ElementRef) {
     this.lastName = 'e 04';
   }
 
