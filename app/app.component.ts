@@ -13,7 +13,7 @@ import {Component, ElementRef} from '@angular/core';
 })
 export class ItunesAppComponent {
   public firstName: string = 'Schalk';
-  public lastName: string = 'Burger';
+  private lastName: string = 'Burger';
   constructor(private elRef: ElementRef) {
     this.lastName = 'e 04';
   }
@@ -22,3 +22,7 @@ export class ItunesAppComponent {
     return `Go ${this.firstName}${this.lastName}!!! -- sent from ${this.elRef.nativeElement}`;
   }
 }
+
+let a = new ItunesAppComponent();
+
+window.alert(a.lastName);
