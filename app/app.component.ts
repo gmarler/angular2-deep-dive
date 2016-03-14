@@ -3,6 +3,7 @@ import {Component, ElementRef} from '@angular/core';
 interface Person {
   firstName: string;
   lastName: string;
+  age?: number;
 }
 
 @Component({
@@ -10,11 +11,12 @@ interface Person {
   templateUrl: 'app/app.html'
 })
 export class ItunesAppComponent {
-  public person: any;
+  public person: Person;
   constructor() {
     this.person = {
       firstName: 'Poe',
-      lastName: 'Dameron'
+      lastName: 'Dameron',
+      age: 24
     };
   }
 
