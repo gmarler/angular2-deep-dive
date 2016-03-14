@@ -1,28 +1,20 @@
 import {Component, ElementRef} from '@angular/core';
 
-/* Just a reminder of the old days of Angular 1: remember Dependency Injection where you would "request" services?
-  angular.module('MyApp')
-    .controller('HomePageController', ['ApiService', 'NameService', function(ApiService, NameService) {
-    // Do something with those services
-  }])
-*/
 
 @Component({
   selector: 'itunes-browser',
   templateUrl: 'app/app.html'
 })
 export class ItunesAppComponent {
-  public firstName: string = 'Schalk';
-  private lastName: string = 'Burger';
-  constructor(private elRef: ElementRef) {
-    this.lastName = 'e 04';
+  public person: any;
+  constructor() {
+    this.person = {
+      firstName: 'Poe',
+      lastName: 'Dameron'
+    };
   }
 
   fan() {
-    return `Go ${this.firstName}${this.lastName}!!! -- sent from ${this.elRef.nativeElement}`;
+    return `BB8 belongs to ${this.person.firstName} ${this.person.lastName}`;
   }
 }
-
-let a = new ItunesAppComponent();
-
-window.alert(a.lastName);
