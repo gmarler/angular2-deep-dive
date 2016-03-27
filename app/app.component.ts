@@ -13,10 +13,11 @@ interface Person {
 export class ItunesAppComponent {
   public person: Person;
   constructor() {
-    this.person = {
+    this.person = <Person>{
       firstName: 'Poe',
       lastName: 'Dameron',
-      age: 24
+      age: 24,
+      side: 'light'
     };
   }
 
