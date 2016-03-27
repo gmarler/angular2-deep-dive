@@ -7,8 +7,10 @@ import {Track, API_RESULTS} from './data';
   templateUrl: 'app/app.html'
 })
 export class ItunesAppComponent {
-  public tracks: Track[];
+  public tracks:Track[];
+  public searchTerm:string;
   constructor() {
     this.tracks = API_RESULTS.results;
+    this.searchTerm = 'Jack Johnson';
   }
 }
