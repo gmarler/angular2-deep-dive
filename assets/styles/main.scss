@@ -15,7 +15,7 @@ header {
 }
 
 footer {
-  position: absolute;
+  position: fixed;
   bottom: 0;
   padding: 10px;
   border-top: solid 1px;
@@ -27,4 +27,17 @@ footer {
   img {
     width: 20px;
   }
+}
+
+.track {
+  font-size: 120%;
+  margin-bottom: 0;
+}
+
+.album {
+  line-height: 16px;
+}
+
+.inbetween {
+  color: turquoise;
 }
