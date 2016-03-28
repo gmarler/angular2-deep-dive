@@ -3,7 +3,7 @@
 </header>
 <div class="container">
 	<h1>Tracks by <span [innerText]="searchTerm"></span></h1>
-	<div class="row" *ngFor="let track of tracks">
+	<div class="row" *ngFor="let track of tracks" [hidden]="track.collectionName !== 'In Between Dreams'">
 		<div class="col-xs-3">
 			<img [src]="track.artworkUrl100">
 		</div>
