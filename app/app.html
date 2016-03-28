@@ -9,7 +9,7 @@
 		</div>
 		<div class="col-xs-8">
 			<p class="track" [innerText]="track.trackName" [style.font-weight]="'bold'"></p>
-			<p class="album" [innerHtml]="'<i>'+track.collectionName+'</i>'"></p>
+			<p [class.inbetween]="track.collectionName === 'In Between Dreams'" class="album" [innerHtml]="'<i>'+track.collectionName+'</i>'"></p>
 		</div>
 	</div>
 </div>
