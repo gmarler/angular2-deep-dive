@@ -3,11 +3,14 @@
 </header>
 <div class="container">
 	<h1>Tracks by <span [innerText]="searchTerm"></span></h1>
-	<div class="row" *ngFor="let track of tracks">
+	<div class="row" *ngFor="let track of tracks; let i = index; let isEven = even; let isLast = last"
+		 [style.background-color]="isEven ? 'lightgray' : ''"
+	>
 		<div class="col-xs-3">
 			<img [src]="track.artworkUrl100">
 		</div>
 		<div class="col-xs-8">
+			<p>{{i+1}} <a href="#" [hidden]="!isLast">Up</a></p>
 			<p class="track" [innerText]="track.trackName"></p>
 			<p class="album" [innerHtml]="'<i>'+track.collectionName+'</i>'"></p>
 		</div>
