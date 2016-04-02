@@ -13,8 +13,11 @@ export class ItunesAppComponent {
     this.tracks = API_RESULTS.results;
     this.searchTerm = 'Jack Johnson';
   }
-  executeSearch() {
-    console.log('Clicked');
+  executeSearch(term:string, event:MouseEvent) {
+    console.log(`The term has changed, and it s not actually ${term} anymore...`);
+    if(event.shiftKey) {
+      this.searchTerm = 'Aha';
+    }
   }
   searchTermChanged() {
     console.log('changed');
