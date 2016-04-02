@@ -15,6 +15,13 @@
 		<div class="col-xs-8">
 			<p class="track" [innerText]="track.trackName"></p>
 			<p class="album" [innerHtml]="'<i>'+track.collectionName+'</i>'"></p>
+			<p>
+				<audio #audio controls>
+					<source [src]="track.previewUrl" type="audio/mp4">
+				</audio>
+				<button (click)="audio.play()">Play</button>
+				<button (click)="audio.pause()">Pause</button>
+			</p>
 		</div>
 	</div>
 </div>
