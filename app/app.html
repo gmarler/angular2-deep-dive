@@ -1,16 +1,18 @@
 <header class="navbar">
 	<div class="navbar-header navbar-brand">Angular2 Deep Dive</div>
 </header>
-<div class="container">
-	<h1>Tracks by <span [innerText]="searchTerm"></span></h1>
-	<div class="row" *ngFor="let track of tracks; let i = index; let isEven = even; let isLast = last"
-		 [style.background-color]="isEven ? 'lightgray' : ''"
-	>
+<div class="container form-inline">
+	<div class="form-group">
+		<label [style.font-weight]="isSearching ? 'bold': 'normal'">Search for</label>
+		<input class="form-control">
+		<button class="btn btn-info">Search</button>
+	</div>
+	<h3>Tracks by <span [innerText]="searchTerm"></span></h3>
+	<div class="row" *ngFor="let track of tracks;">
 		<div class="col-xs-3">
 			<img [src]="track.artworkUrl100">
 		</div>
 		<div class="col-xs-8">
-			<p>{{i+1}} <a href="#" [hidden]="!isLast">Up</a></p>
 			<p class="track" [innerText]="track.trackName"></p>
 			<p class="album" [innerHtml]="'<i>'+track.collectionName+'</i>'"></p>
 		</div>
