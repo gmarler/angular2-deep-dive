@@ -4,7 +4,7 @@
 <div class="container form-inline">
 	<div class="form-group">
 		<label [style.font-weight]="isSearching ? 'bold': 'normal'">Search for</label>
-		<input class="form-control" (change)="searchTermChanged()" [(ngModel)]="searchTerm">
+		<input class="form-control" (keyup.enter)="executeSearch(searchTerm, $event)" [(ngModel)]="searchTerm">
 		<button class="btn btn-info" (click)="executeSearch(searchTerm, $event)">Search</button>
 	</div>
 	<h3>Tracks by <span [innerText]="searchTerm"></span></h3>

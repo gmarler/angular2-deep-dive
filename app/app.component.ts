@@ -14,6 +14,7 @@ export class ItunesAppComponent {
     this.searchTerm = '';
   }
   executeSearch(term:string, event:MouseEvent) {
+    console.log('Execute');
     if(event.shiftKey) {
       this.searchTerm = '';
     }
