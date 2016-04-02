@@ -4,8 +4,8 @@
 <div class="container form-inline">
 	<div class="form-group">
 		<label [style.font-weight]="isSearching ? 'bold': 'normal'">Search for</label>
-		<input class="form-control">
-		<button class="btn btn-info">Search</button>
+		<input class="form-control" (change)="searchTermChanged()">
+		<button class="btn btn-info" (click)="executeSearch()">Search</button>
 	</div>
 	<h3>Tracks by <span [innerText]="searchTerm"></span></h3>
 	<div class="row" *ngFor="let track of tracks;">

@@ -13,4 +13,10 @@ export class ItunesAppComponent {
     this.tracks = API_RESULTS.results;
     this.searchTerm = 'Jack Johnson';
   }
+  executeSearch() {
+    console.log('Clicked');
+  }
+  searchTermChanged() {
+    console.log('changed');
+  }
 }
