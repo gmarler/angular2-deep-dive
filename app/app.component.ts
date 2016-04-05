@@ -1,10 +1,12 @@
 import {Component, ElementRef} from '@angular/core';
 
 import {Track, API_RESULTS} from './data';
+import {SearchBarComponent} from './search/searchbar.component';
 
 @Component({
   selector: 'itunes-browser',
-  templateUrl: 'app/app.html'
+  templateUrl: 'app/app.html',
+  directives: [SearchBarComponent]
 })
 export class ItunesAppComponent {
   public tracks:Track[];
