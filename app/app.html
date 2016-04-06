@@ -4,7 +4,7 @@
 <div class="container form-inline">
 	<search-bar class="form-group"></search-bar>
 	<h3>Tracks by <span [innerText]="searchTerm"></span></h3>
-	<input placeholder="not gray">
+	<input placeholder="affected?">
 	<div class="row" *ngFor="let track of tracks;">
 		<div class="col-xs-3">
 			<img [src]="track.artworkUrl100">
