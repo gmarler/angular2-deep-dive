@@ -1,4 +1,5 @@
 import {Component} from '@angular/core';
+import {HOVER_INPUT} from '../styles/forms';
 
 @Component({
   selector: 'search-bar',
@@ -8,12 +9,8 @@ import {Component} from '@angular/core';
     <button class="btn btn-info" (click)="executeSearch(searchTerm, $event)">Search</button>
   `,
   styles: [
-    `
-      input:hover {
-        background-color: #eee;
-      }
-    `
-  ]
+    HOVER_INPUT
+  ],
 })
 export class SearchBarComponent {
   public searchTerm = '';
