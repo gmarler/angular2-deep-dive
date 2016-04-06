@@ -1,5 +1,6 @@
 import {Component, ViewEncapsulation} from '@angular/core';
-import {HOVER_INPUT} from '../styles/forms';
+import {HOVER_INPUT, FORM_STYLING} from '../styles/forms';
+import {BUTTONS} from '../styles/buttons';
 
 @Component({
   selector: 'search-bar',
@@ -9,7 +10,9 @@ import {HOVER_INPUT} from '../styles/forms';
     <button class="btn btn-info" (click)="executeSearch(searchTerm, $event)">Search</button>
   `,
   styles: [
-    HOVER_INPUT
+    HOVER_INPUT,
+    FORM_STYLING,
+    BUTTONS
   ],
   encapsulation: ViewEncapsulation.Native
 })
