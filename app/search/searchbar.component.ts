@@ -6,7 +6,14 @@ import {Component} from '@angular/core';
     <label>Search for</label>
     <input [(ngModel)]='searchTerm' class="form-control" (keyup.enter)="executeSearch(searchTerm, $event)">
     <button class="btn btn-info" (click)="executeSearch(searchTerm, $event)">Search</button>
-  `
+  `,
+  styles: [
+    `
+      input:hover {
+        background-color: #eee;
+      }
+    `
+  ]
 })
 export class SearchBarComponent {
   public searchTerm = '';
