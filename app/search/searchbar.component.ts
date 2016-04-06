@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, ViewEncapsulation} from '@angular/core';
 import {HOVER_INPUT} from '../styles/forms';
 
 @Component({
@@ -11,6 +11,7 @@ import {HOVER_INPUT} from '../styles/forms';
   styles: [
     HOVER_INPUT
   ],
+  encapsulation: ViewEncapsulation.Native
 })
 export class SearchBarComponent {
   public searchTerm = '';
