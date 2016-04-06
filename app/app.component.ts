@@ -15,12 +15,7 @@ export class ItunesAppComponent {
     this.tracks = API_RESULTS.results;
     this.searchTerm = '';
   }
-  executeSearch(term:string, event:MouseEvent) {
-    console.log(term);
-    if(event.shiftKey) {
-      this.searchTerm = '';
-    }
-  }
+
   searchTermChanged() {
     console.log('changed');
   }

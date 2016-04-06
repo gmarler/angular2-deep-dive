@@ -4,8 +4,16 @@ import {Component} from '@angular/core';
   selector: 'search-bar',
   template: `
     <label>Search for</label>
-    <input #inputElement class="form-control" (keyup.enter)="executeSearch(inputElement.value, $event)">
-    <button class="btn btn-info" (click)="executeSearch(inputElement.value, $event)">Search</button>
+    <input [(ngModel)]='searchTerm' class="form-control" (keyup.enter)="executeSearch(searchTerm, $event)">
+    <button class="btn btn-info" (click)="executeSearch(searchTerm, $event)">Search</button>
   `
 })
-export class SearchBarComponent {}
+export class SearchBarComponent {
+  public searchTerm = '';
+  executeSearch(term:string, event:MouseEvent) {
+    console.log(term);
+    if(event.shiftKey) {
+      this.searchTerm = '';
+    }
+  }
+}
