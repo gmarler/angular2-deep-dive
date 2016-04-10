@@ -12,7 +12,8 @@ export class ItunesAppComponent {
   public tracks:Track[] = API_RESULTS.results;
   public searchTerm:string = '';
 
-  searchTermChanged() {
-    console.log('changed');
+  runTheSearch(term:string) {
+    this.searchTerm = term;
+    this.tracks = API_RESULTS.results.filter((item) => item.trackName.includes(term));
   }
 }

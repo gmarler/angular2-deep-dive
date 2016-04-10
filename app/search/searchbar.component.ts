@@ -1,4 +1,4 @@
-import {Component, ViewEncapsulation} from '@angular/core';
+import {Component, ViewEncapsulation, Output, EventEmitter} from '@angular/core';
 import {HOVER_INPUT, FORM_STYLING} from '../styles/forms';
 import {BUTTONS} from '../styles/buttons';
 
@@ -17,11 +17,14 @@ import {BUTTONS} from '../styles/buttons';
   encapsulation: ViewEncapsulation.Native
 })
 export class SearchBarComponent {
+  @Output() execute = new EventEmitter();
   public searchTerm = '';
   executeSearch(term:string, event:MouseEvent) {
     console.log(term);
     if(event.shiftKey) {
       this.searchTerm = '';
+    } else {
+      this.execute.next(term);
     }
   }
 }
