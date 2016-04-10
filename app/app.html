@@ -4,13 +4,5 @@
 <div class="container form-inline">
 	<search-bar class="form-group"></search-bar>
 	<h3 [hidden]="!searchTerm">Tracks containing "<span [innerText]="searchTerm"></span>"</h3>
-  <div class="row" *ngFor="let track of tracks;">
-    <div class="col-xs-3">
-      <img [src]="track.artworkUrl100">
-    </div>
-    <div class="col-xs-8">
-      <p class="track" [innerText]="track.trackName"></p>
-      <p class="album" [innerHtml]="'<i>'+track.collectionName+'</i>'"></p>
-    </div>
-  </div>
+	<track-row  *ngFor="let track of tracks;"></track-row>
 </div>
