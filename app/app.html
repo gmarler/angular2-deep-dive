@@ -3,7 +3,7 @@
 </header>
 <div class="container form-inline">
 	<search-bar class="form-group"></search-bar>
-	<h3>Tracks by <span [innerText]="searchTerm"></span></h3>
+	<h3 [hidden]="!searchTerm">Tracks containing "<span [innerText]="searchTerm"></span>"</h3>
   <div class="row" *ngFor="let track of tracks;">
     <div class="col-xs-3">
       <img [src]="track.artworkUrl100">
