@@ -17,7 +17,7 @@ import {BUTTONS} from '../styles/buttons';
   encapsulation: ViewEncapsulation.Native
 })
 export class SearchBarComponent {
-  @Output() execute = new EventEmitter();
+  @Output('execute-search') execute = new EventEmitter();
   public searchTerm = '';
   executeSearch(term:string, event:MouseEvent) {
     console.log(term);
