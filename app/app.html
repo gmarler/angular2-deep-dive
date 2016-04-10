@@ -4,5 +4,5 @@
 <div class="container form-inline">
 	<search-bar class="form-group"></search-bar>
 	<h3 [hidden]="!searchTerm">Tracks containing "<span [innerText]="searchTerm"></span>"</h3>
-	<track-row  *ngFor="let track of tracks;"></track-row>
+	<track-row  *ngFor="let trackObj of tracks;" [track]="trackObj"></track-row>
 </div>
