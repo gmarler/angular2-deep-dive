@@ -33,5 +33,5 @@ import {Track} from '../tracks/data';
   encapsulation: ViewEncapsulation.Native
 })
 export class TrackComponent {
-  @Input() track: Track;
+  @Input('track-model') track: Track;
 }
