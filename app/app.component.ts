@@ -10,7 +10,8 @@ import {TrackComponent} from './tracks/track.component';
 })
 export class ItunesAppComponent {
   public tracks:Track[] = API_RESULTS.results;
-  public searchTerm:string = '';
+  public searchTerm = '';
+  public typedTerm = '';
 
   runTheSearch(term:string) {
     this.searchTerm = term;
