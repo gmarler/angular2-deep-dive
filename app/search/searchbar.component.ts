@@ -1,4 +1,4 @@
-import {Component, ViewEncapsulation, Input, Output, EventEmitter} from '@angular/core';
+import {Component, ViewEncapsulation, EventEmitter} from '@angular/core';
 import {HOVER_INPUT, FORM_STYLING} from '../styles/forms';
 import {BUTTONS} from '../styles/buttons';
 
@@ -7,7 +7,7 @@ import {BUTTONS} from '../styles/buttons';
   selector: 'search-bar',
   template: `
     <label>Search for</label>
-    <input [(ngModel)]="term" (keyup)="termHasChanged()" class="form-control" (keyup.enter)="executeSearch(searchTerm, $event)">
+    <input [(ngModel)]="searchTerm" (keyup)="termHasChanged()" class="form-control" (keyup.enter)="executeSearch(searchTerm, $event)">
     <button class="btn btn-info" (click)="executeSearch(searchTerm, $event)">Search</button>
   `,
   styles: [
@@ -15,20 +15,22 @@ import {BUTTONS} from '../styles/buttons';
     FORM_STYLING,
     BUTTONS
   ],
-  encapsulation: ViewEncapsulation.Native
+  encapsulation: ViewEncapsulation.Native,
+  inputs: ['searchTerm: term'],
+  outputs: ['sTC: termChange', 'execute: execute-search'],
 })
 export class SearchBarComponent {
-  @Input() term = '';
-  @Output() termChange = new EventEmitter<string>();
-  @Output('execute-search') execute = new EventEmitter();
+  searchTerm = '';
+  sTC = new EventEmitter<string>();
+  execute = new EventEmitter();
 
   termHasChanged() {
-    this.termChange.emit(this.term);
+    this.sTC.emit(this.searchTerm);
   }
 
   executeSearch(term:string, event:MouseEvent) {
     if(event.shiftKey) {
-      this.term = '';
+      this.searchTerm = '';
     } else {
       this.execute.emit(term);
     }
