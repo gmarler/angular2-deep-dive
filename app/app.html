@@ -2,7 +2,9 @@
 	<div class="navbar-header navbar-brand">Angular2 Deep Dive</div>
 </header>
 <div class="container form-inline">
-	<search-bar class="form-group" (execute-search)="runTheSearch($event)"></search-bar>
+	<search-bar [(term)]="typedTerm" class="form-group" (execute-search)="runTheSearch($event)"></search-bar>
+	<p>You've typed... {{typedTerm}}</p>
+	<p><button (click)="typedTerm = ''">Clear</button></p>
 	<h3 [hidden]="!searchTerm">Tracks containing "<span [innerText]="searchTerm"></span>"</h3>
   <track-row  *ngFor="let trackObj of tracks;" [track-model]="trackObj"></track-row>
 </div>
