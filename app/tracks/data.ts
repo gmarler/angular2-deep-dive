@@ -3,6 +3,7 @@ export interface Track {
   artistName:string;
   trackName:string;
   artworkUrl100:string;
+  previewUrl:string;
 }
 
 export const API_RESULTS = {

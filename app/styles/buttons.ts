@@ -31,4 +31,14 @@ export const BUTTONS = `
     color: #ffffff;
     background-color: ${COLORS.quinary};
   }
+
+  .btn-danger {
+    color: #ffffff;
+    background-color: ${COLORS.primary};
+  }
+
+  .btn-success {
+    color: #ffffff;
+    background-color: ${COLORS.tertiary};
+  }
 `;

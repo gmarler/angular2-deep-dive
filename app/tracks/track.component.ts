@@ -1,7 +1,10 @@
 import {Component, Input, ViewEncapsulation} from '@angular/core';
 import {GRID} from '../styles/grid/grid12';
+import {COLORS} from '../styles/colors';
 import {BOOTSTRAP_CORE} from '../styles/bootstrap';
 import {Track} from '../tracks/data';
+
+
 
 @Component({
   selector: 'track-row',
@@ -9,6 +12,11 @@ import {Track} from '../tracks/data';
     BOOTSTRAP_CORE,
     GRID,
     `
+    .row {
+      margin-top: 5px;
+      margin-bottom: 5px;
+      border-bottom: dotted 1px ${COLORS.quinary};
+    }
     .track {
       font-size: 120%;
       margin-bottom: 0;
@@ -27,6 +35,11 @@ import {Track} from '../tracks/data';
     <div class="col-xs-8">
       <p class="track" [innerText]="track.trackName"></p>
       <p class="album" [innerHtml]="'<i>'+track.collectionName+'</i>'"></p>
+    </div>
+    <div class="col-xs-12">
+      <audio>
+        <source [src]="track.previewUrl" type="audio/mp4">
+      </audio>
     </div>
   </div>
   `,
