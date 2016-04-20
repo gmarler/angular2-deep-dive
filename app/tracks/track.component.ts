@@ -6,17 +6,16 @@ import {BOOTSTRAP_CORE} from '../styles/bootstrap';
 import {Track} from '../tracks/data';
 
 
-
 @Component({
   selector: 'cool-audio',
   styles: [BUTTONS],
   template: `
   <div>
     <audio controls>
-      <ng-content></ng-content>
+      <ng-content select="source"></ng-content>
     </audio>
-    <button class="btn btn-info">Play</button>
-    <button class="btn btn-danger">Stop</button>
+    <ng-content select=".playbutton"></ng-content>
+    <ng-content select="[stopbutton]"></ng-content>
   </div>
   `
 })
@@ -56,7 +55,10 @@ class CoolAudio  {
     </div>
     <div class="col-xs-12">
       <cool-audio>
+        <button class="playbutton">Go!</button>
         <source [src]="track.previewUrl" type="audio/mp4">
+        <source [src]="track.previewUrl" type="audio/mp4">
+        <button stopbutton>Halt</button>
       </cool-audio>
     </div>
   </div>
