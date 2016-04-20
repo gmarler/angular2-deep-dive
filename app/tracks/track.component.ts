@@ -1,13 +1,31 @@
 import {Component, Input, ViewEncapsulation} from '@angular/core';
 import {GRID} from '../styles/grid/grid12';
 import {COLORS} from '../styles/colors';
+import {BUTTONS} from '../styles/buttons';
 import {BOOTSTRAP_CORE} from '../styles/bootstrap';
 import {Track} from '../tracks/data';
 
 
 
 @Component({
+  selector: 'cool-audio',
+  styles: [BUTTONS],
+  template: `
+  <div>
+    <audio controls>
+      <ng-content></ng-content>
+    </audio>
+    <button class="btn btn-info">Play</button>
+    <button class="btn btn-danger">Stop</button>
+  </div>
+  `
+})
+class CoolAudio  {
+}
+
+@Component({
   selector: 'track-row',
+  directives: [CoolAudio],
   styles: [
     BOOTSTRAP_CORE,
     GRID,
@@ -37,9 +55,9 @@ import {Track} from '../tracks/data';
       <p class="album" [innerHtml]="'<i>'+track.collectionName+'</i>'"></p>
     </div>
     <div class="col-xs-12">
-      <audio>
+      <cool-audio>
         <source [src]="track.previewUrl" type="audio/mp4">
-      </audio>
+      </cool-audio>
     </div>
   </div>
   `,
