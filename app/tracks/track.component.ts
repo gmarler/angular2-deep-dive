@@ -1,4 +1,4 @@
-import {Component, Input, ViewEncapsulation, ElementRef, ViewChild, ContentChild} from '@angular/core';
+import {Component, Input, ViewEncapsulation, ElementRef, Directive, ContentChild, ViewChild} from '@angular/core';
 import {GRID} from '../styles/grid/grid12';
 import {COLORS} from '../styles/colors';
 import {BUTTONS} from '../styles/buttons';
@@ -25,12 +25,30 @@ class AudioComponent {
   }
 }
 
+@Directive({
+  selector: '[preview]',
+  host: {
+    '(mouseenter)': 'play()',
+    '(mouseleave)': 'stop()'
+  }
+})
+class PreviewDirective {
+  @ContentChild(AudioComponent) audioComponent: AudioComponent;
+  play() {
+    this.audioComponent.play();
+  }
+  stop() {
+    this.audioComponent.stop();
+  }
+}
+
+
 @Component({
   selector: 'cool-audio',
-  directives: [AudioComponent],
+  directives: [AudioComponent, PreviewDirective],
   styles: [BUTTONS],
   template: `
-  <div>
+  <div preview>
     <button class="btn btn-info" (click)="play()">Play</button>
     <button class="btn btn-danger" (click)="stop()">Stop</button>
     <audio>
