@@ -1,4 +1,4 @@
-import {Component, Input, ViewEncapsulation} from '@angular/core';
+import {Component, Input, ViewEncapsulation, ElementRef} from '@angular/core';
 import {GRID} from '../styles/grid/grid12';
 import {COLORS} from '../styles/colors';
 import {BUTTONS} from '../styles/buttons';
@@ -11,15 +11,24 @@ import {Track} from '../tracks/data';
   styles: [BUTTONS],
   template: `
   <div>
-    <audio controls>
+    <button class="btn btn-info" (click)="play()">Play</button>
+    <button class="btn btn-danger" (click)="stop()">Stop</button>
+    <audio>
       <ng-content select="source"></ng-content>
     </audio>
-    <ng-content select=".playbutton"></ng-content>
-    <ng-content select="[stopbutton]"></ng-content>
   </div>
   `
 })
 class CoolAudio  {
+  constructor(private el:ElementRef) {
+    console.log(el);
+  }
+  play() {
+    this.el.nativeElement.querySelector('audio').play();
+  }
+  stop() {
+    this.el.nativeElement.querySelector('audio').pause();
+  }
 }
 
 @Component({
@@ -55,10 +64,7 @@ class CoolAudio  {
     </div>
     <div class="col-xs-12">
       <cool-audio>
-        <button class="playbutton">Go!</button>
         <source [src]="track.previewUrl" type="audio/mp4">
-        <source [src]="track.previewUrl" type="audio/mp4">
-        <button stopbutton>Halt</button>
       </cool-audio>
     </div>
   </div>
