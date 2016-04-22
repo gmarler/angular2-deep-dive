@@ -5,11 +5,10 @@ import {BUTTONS} from '../styles/buttons';
 import {BOOTSTRAP_CORE} from '../styles/bootstrap';
 import {Track} from '../tracks/data';
 
-@Component({
-  selector: 'audio',
-  template: '<ng-content></ng-content>'
+@Directive({
+  selector: 'audio'
 })
-class AudioComponent {
+class AudioDirective {
   private native:any;
   constructor(el:ElementRef) {
     this.native = el.nativeElement;
@@ -26,14 +25,10 @@ class AudioComponent {
 }
 
 @Directive({
-  selector: '[preview]',
-  host: {
-    '(mouseenter)': 'play()',
-    '(mouseleave)': 'stop()'
-  }
+  selector: 'audio'
 })
 class PreviewDirective {
-  @ContentChild(AudioComponent) audioComponent: AudioComponent;
+  @ContentChild(AudioDirective) audioComponent: AudioDirective;
   play() {
     this.audioComponent.play();
   }
@@ -45,10 +40,10 @@ class PreviewDirective {
 
 @Component({
   selector: 'cool-audio',
-  directives: [AudioComponent, PreviewDirective],
+  directives: [AudioDirective, PreviewDirective],
   styles: [BUTTONS],
   template: `
-  <div preview>
+  <div>
     <button class="btn btn-info" (click)="play()">Play</button>
     <button class="btn btn-danger" (click)="stop()">Stop</button>
     <audio>
@@ -58,7 +53,7 @@ class PreviewDirective {
   `
 })
 class CoolAudio  {
-  @ViewChild(AudioComponent) private ngAudioElement:AudioComponent;
+  @ViewChild(AudioDirective) private ngAudioElement:AudioDirective;
   play() {
     console.log(`Now playing ${this.ngAudioElement.source}`);
     this.ngAudioElement.play();
