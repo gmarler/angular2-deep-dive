@@ -13,6 +13,11 @@ export class ItunesAppComponent {
   public searchTerm = '';
   public typedTerm = '';
 
+  constructor() {
+    API_RESULTS.results.forEach((i) => i.sources = [i.previewUrl]);
+    setInterval(() => API_RESULTS.results[0].sources.push('random stuff'),2000);
+  }
+
   runTheSearch(term:string) {
     this.searchTerm = term;
     this.tracks = API_RESULTS.results.filter((item) => item.trackName.includes(term));
