@@ -20,14 +20,17 @@ import {Track} from '../tracks/data';
   `
 })
 class CoolAudio  {
+  private audioElement:any;
   constructor(private el:ElementRef) {
-    console.log(el);
   }
   play() {
-    this.el.nativeElement.querySelector('audio').play();
+    this.audioElement.play();
   }
   stop() {
-    this.el.nativeElement.querySelector('audio').pause();
+    this.audioElement.pause();
+  }
+  ngAfterViewInit() {
+    this.audioElement = this.el.nativeElement.querySelector('audio');
   }
 }
 
