@@ -5,33 +5,48 @@ import {BUTTONS} from '../styles/buttons';
 import {BOOTSTRAP_CORE} from '../styles/bootstrap';
 import {Track} from '../tracks/data';
 
+@Component({
+  selector: 'audio',
+  template: '<ng-content></ng-content>'
+})
+class AudioComponent {
+  private native:any;
+  constructor(el:ElementRef) {
+    this.native = el.nativeElement;
+  }
+  play() {
+    this.native.play();
+  }
+  stop() {
+    this.native.pause();
+  }
+  get source() {
+    return this.native.querySelector('source').getAttribute('src');
+  }
+}
 
 @Component({
   selector: 'cool-audio',
+  directives: [AudioComponent],
   styles: [BUTTONS],
   template: `
   <div>
     <button class="btn btn-info" (click)="play()">Play</button>
     <button class="btn btn-danger" (click)="stop()">Stop</button>
-    <audio #audioElement>
+    <audio>
       <ng-content select="source"></ng-content>
     </audio>
   </div>
   `
 })
 class CoolAudio  {
-  @ViewChild('audioElement') private ngAudioElement:ElementRef;
-  @ContentChild('sourceElement') private ngSourceElement:ElementRef;
-  private audioElement:any;
+  @ViewChild(AudioComponent) private ngAudioElement:AudioComponent;
   play() {
-    console.log(`Now playing ${this.ngSourceElement.nativeElement.getAttribute('src')}`);
-    this.audioElement.play();
+    console.log(`Now playing ${this.ngAudioElement.source}`);
+    this.ngAudioElement.play();
   }
   stop() {
-    this.audioElement.pause();
-  }
-  ngAfterViewInit() {
-    this.audioElement = this.ngAudioElement.nativeElement;
+    this.ngAudioElement.stop();
   }
 }
 
@@ -68,7 +83,7 @@ class CoolAudio  {
     </div>
     <div class="col-xs-12">
       <cool-audio>
-        <source #sourceElement [src]="track.previewUrl" type="audio/mp4">
+        <source [src]="track.previewUrl" type="audio/mp4">
       </cool-audio>
     </div>
   </div>
