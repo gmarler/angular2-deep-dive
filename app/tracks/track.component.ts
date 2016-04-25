@@ -1,4 +1,4 @@
-import {Component, Input, ViewEncapsulation, ElementRef, ViewChild} from '@angular/core';
+import {Component, Input, ViewEncapsulation, ElementRef, ViewChild, ContentChild} from '@angular/core';
 import {GRID} from '../styles/grid/grid12';
 import {COLORS} from '../styles/colors';
 import {BUTTONS} from '../styles/buttons';
@@ -21,12 +21,14 @@ import {Track} from '../tracks/data';
 })
 class CoolAudio  {
   @ViewChild('audioElement') private ngAudioElement:ElementRef;
+  @ContentChild('sourceElement') private ngSourceElement:ElementRef;
   private audioElement:any;
   play() {
-    this.ngAudioElement.nativeElement.play();
+    console.log(`Now playing ${this.ngSourceElement.nativeElement.getAttribute('src')}`);
+    this.audioElement.play();
   }
   stop() {
-    this.ngAudioElement.nativeElement.pause();
+    this.audioElement.pause();
   }
   ngAfterViewInit() {
     this.audioElement = this.ngAudioElement.nativeElement;
@@ -66,7 +68,7 @@ class CoolAudio  {
     </div>
     <div class="col-xs-12">
       <cool-audio>
-        <source [src]="track.previewUrl" type="audio/mp4">
+        <source #sourceElement [src]="track.previewUrl" type="audio/mp4">
       </cool-audio>
     </div>
   </div>
