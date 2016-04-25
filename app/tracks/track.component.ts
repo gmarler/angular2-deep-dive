@@ -1,4 +1,4 @@
-import {Component, Input, ViewEncapsulation, ElementRef} from '@angular/core';
+import {Component, Input, ViewEncapsulation, ElementRef, ViewChild} from '@angular/core';
 import {GRID} from '../styles/grid/grid12';
 import {COLORS} from '../styles/colors';
 import {BUTTONS} from '../styles/buttons';
@@ -13,24 +13,23 @@ import {Track} from '../tracks/data';
   <div>
     <button class="btn btn-info" (click)="play()">Play</button>
     <button class="btn btn-danger" (click)="stop()">Stop</button>
-    <audio>
+    <audio #audioElement>
       <ng-content select="source"></ng-content>
     </audio>
   </div>
   `
 })
 class CoolAudio  {
+  @ViewChild('audioElement') private ngAudioElement:ElementRef;
   private audioElement:any;
-  constructor(private el:ElementRef) {
-  }
   play() {
-    this.audioElement.play();
+    this.ngAudioElement.nativeElement.play();
   }
   stop() {
-    this.audioElement.pause();
+    this.ngAudioElement.nativeElement.pause();
   }
   ngAfterViewInit() {
-    this.audioElement = this.el.nativeElement.querySelector('audio');
+    this.audioElement = this.ngAudioElement.nativeElement;
   }
 }
 
