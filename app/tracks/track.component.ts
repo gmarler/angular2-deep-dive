@@ -3,12 +3,7 @@ import {GRID} from '../styles/grid/grid12';
 import {COLORS} from '../styles/colors';
 import {BUTTONS} from '../styles/buttons';
 import {BOOTSTRAP_CORE} from '../styles/bootstrap';
-import {Track} from '../tracks/data';
-
-@Directive({
-  selector: 'source'
-})
-class SourceDirective {}
+import {Track} from './track.model';
 
 @Directive({
   selector: 'audio'
@@ -29,29 +24,15 @@ class AudioDirective {
   }
 }
 
-@Directive({
-  selector: 'audio'
-})
-class PreviewDirective {
-  @ContentChild(AudioDirective) audioComponent: AudioDirective;
-  play() {
-    this.audioComponent.play();
-  }
-  stop() {
-    this.audioComponent.stop();
-  }
-}
-
 
 @Component({
   selector: 'cool-audio',
-  directives: [AudioDirective, PreviewDirective],
+  directives: [AudioDirective],
   styles: [BUTTONS],
   template: `
   <div>
     <button class="btn btn-info" (click)="play()">Play</button>
     <button class="btn btn-danger" (click)="stop()">Stop</button>
-    <p *ngIf="numberOfSources>0">I've got {{numberOfSources}} sources</p>
     <audio>
       <ng-content select="source"></ng-content>
     </audio>
@@ -59,24 +40,18 @@ class PreviewDirective {
   `
 })
 class CoolAudio  {
-  @ContentChildren(SourceDirective) sources: QueryList<SourceDirective>;
-  numberOfSources:number = 0;
   @ViewChild(AudioDirective) private ngAudioElement:AudioDirective;
   play() {
-    console.log(`Now playing ${this.ngAudioElement.source}`);
     this.ngAudioElement.play();
   }
   stop() {
     this.ngAudioElement.stop();
   }
-  ngAfterContentInit() {
-    this.sources.changes.subscribe((items:QueryList<SourceDirective>) => this.numberOfSources = items.length);
-  }
 }
 
 @Component({
   selector: 'track-row',
-  directives: [CoolAudio, SourceDirective],
+  directives: [CoolAudio],
   styles: [
     BOOTSTRAP_CORE,
     GRID,
@@ -107,7 +82,7 @@ class CoolAudio  {
     </div>
     <div class="col-xs-12">
       <cool-audio>
-        <source *ngFor="#s of track.sources" [src]="s" type="audio/mp4">
+        <source [src]="track.previewUrl" type="audio/mp4">
       </cool-audio>
     </div>
   </div>
