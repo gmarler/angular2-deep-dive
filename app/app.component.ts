@@ -1,5 +1,5 @@
 import {Component, ElementRef} from '@angular/core';
-import {Track, API_RESULTS} from './tracks/data';
+import {Track} from './tracks/track.model';
 import {SearchBarComponent} from './search/searchbar.component';
 import {TrackComponent} from './tracks/track.component';
 
@@ -17,6 +17,7 @@ export class ItunesAppComponent {
   }
 
   runTheSearch(term:string) {
-    
+    // API url
+    // http://redapesolutions.com/itunes?entity=musicTrack&term=${term}
   }
 }
