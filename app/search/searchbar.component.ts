@@ -1,4 +1,4 @@
-import {Component, ViewEncapsulation, Input, Output, EventEmitter} from '@angular/core';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 import {HOVER_INPUT, FORM_STYLING} from '../styles/forms';
 import {BUTTONS} from '../styles/buttons';
 
@@ -14,8 +14,7 @@ import {BUTTONS} from '../styles/buttons';
     HOVER_INPUT,
     FORM_STYLING,
     BUTTONS
-  ],
-  encapsulation: ViewEncapsulation.Native
+  ]
 })
 export class SearchBarComponent {
   @Input() term = '';

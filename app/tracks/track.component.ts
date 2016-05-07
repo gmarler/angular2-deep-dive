@@ -1,53 +1,9 @@
-import {Component, Input, ViewEncapsulation, ElementRef, Directive, ContentChild, ViewChild, ContentChildren, QueryList} from '@angular/core';
+import {Component, Input, ElementRef} from '@angular/core';
 import {GRID} from '../styles/grid/grid12';
 import {COLORS} from '../styles/colors';
-import {BUTTONS} from '../styles/buttons';
 import {BOOTSTRAP_CORE} from '../styles/bootstrap';
 import {Track} from './track.model';
-
-@Directive({
-  selector: 'audio'
-})
-class AudioDirective {
-  private native:any;
-  constructor(el:ElementRef) {
-    this.native = el.nativeElement;
-  }
-  play() {
-    this.native.play();
-  }
-  stop() {
-    this.native.pause();
-  }
-  get source() {
-    return this.native.querySelector('source').getAttribute('src');
-  }
-}
-
-
-@Component({
-  selector: 'cool-audio',
-  directives: [AudioDirective],
-  styles: [BUTTONS],
-  template: `
-  <div>
-    <button class="btn btn-info" (click)="play()">Play</button>
-    <button class="btn btn-danger" (click)="stop()">Stop</button>
-    <audio>
-      <ng-content select="source"></ng-content>
-    </audio>
-  </div>
-  `
-})
-class CoolAudio  {
-  @ViewChild(AudioDirective) private ngAudioElement:AudioDirective;
-  play() {
-    this.ngAudioElement.play();
-  }
-  stop() {
-    this.ngAudioElement.stop();
-  }
-}
+import {CoolAudio} from './cool-audio.component';
 
 @Component({
   selector: 'track-row',
@@ -86,8 +42,7 @@ class CoolAudio  {
       </cool-audio>
     </div>
   </div>
-  `,
-  encapsulation: ViewEncapsulation.Native
+  `
 })
 export class TrackComponent {
   @Input('track-model') track: Track;
