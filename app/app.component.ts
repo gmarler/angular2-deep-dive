@@ -1,5 +1,6 @@
 import {Component, ElementRef} from '@angular/core';
-import {Http, Response, HTTP_PROVIDERS} from '@angular/http';
+import {} from '@angular/http';
+import {SearchService} from './search/search.service';
 import {Track} from './tracks/track.model';
 import {SearchBarComponent} from './search/searchbar.component';
 import {TrackComponent} from './tracks/track.component';
@@ -8,24 +9,16 @@ import {TrackComponent} from './tracks/track.component';
   selector: 'itunes-browser',
   templateUrl: 'app/app.html',
   directives: [SearchBarComponent, TrackComponent],
-  providers: [HTTP_PROVIDERS]
+  providers: []
 })
 export class ItunesAppComponent {
   public tracks:Track[] = [];
   public searchTerm = '';
   public typedTerm = '';
 
-  constructor(private http:Http) {
+  constructor() {
   }
 
   runTheSearch(term:string) {
-    // API url
-    this.http.get(`http://redapesolutions.com/itunes?entity=musicTrack&term=${term}`)
-      .subscribe(
-        (response) => this.tracks = response.json().results,
-        (response:Response) => {
-          console.log(response.type, response.url);
-        }
-      );
   }
 }
