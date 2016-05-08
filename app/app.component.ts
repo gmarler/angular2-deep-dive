@@ -1,9 +1,9 @@
-import {Component, ElementRef} from '@angular/core';
+import {Component, ElementRef, provide, Injector} from '@angular/core';
 import {Track} from './tracks/track.model';
 import {SearchBarComponent} from './search/searchbar.component';
-import {SearchService} from './search/search.service';
+import {SearchService, API_URL} from './search/search.service';
 import {TrackComponent} from './tracks/track.component';
-import {JSONP_PROVIDERS} from '@angular/http';
+import {JSONP_PROVIDERS, URLSearchParams} from '@angular/http';
 
 @Component({
   selector: 'itunes-browser',
@@ -16,7 +16,11 @@ export class ItunesAppComponent {
   public searchTerm = '';
   public typedTerm = '';
 
-  constructor(private searchService:SearchService) {
+  constructor(private searchService:SearchService, injector:Injector) {
+    // Uncomment this if you're insterested to see the injector's internal tokens to represent each provider
+    // console.log(injector._view);
+    // debugger;
+    // If using the string 'API_URL' in the DI, look for injector._view._API_URL_0_<some number here>
   }
 
   runTheSearch(term:string) {
