@@ -3,13 +3,19 @@ import {Track} from './tracks/track.model';
 import {SearchBarComponent} from './search/searchbar.component';
 import {SearchService, API_URL} from './search/search.service';
 import {TrackComponent} from './tracks/track.component';
-import {JSONP_PROVIDERS, URLSearchParams} from '@angular/http';
+import {JSONP_PROVIDERS, URLSearchParams, RequestOptions, BaseRequestOptions} from '@angular/http';
+
+class JsonpOptions extends BaseRequestOptions {
+  search = new URLSearchParams('callback=JSONP_CALLBACK');
+}
 
 @Component({
   selector: 'itunes-browser',
   templateUrl: 'app/app.html',
   directives: [SearchBarComponent, TrackComponent],
-  providers: [JSONP_PROVIDERS, SearchService]
+  providers: [JSONP_PROVIDERS, SearchService, provide(RequestOptions, {
+    useClass: JsonpOptions
+  })]
 })
 export class ItunesAppComponent {
   public tracks:Track[] = [];
