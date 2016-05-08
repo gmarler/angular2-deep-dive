@@ -4,7 +4,7 @@ import {BUTTONS} from '../styles/buttons';
 
 @Component({
   selector: 'cool-audio',
-  directives: [AudioDirective],
+  directives: [],
   styles: [BUTTONS],
   template: `
   <div>
