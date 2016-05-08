@@ -15,6 +15,8 @@ class JsonpOptions extends BaseRequestOptions {
   directives: [SearchBarComponent, TrackComponent],
   providers: [JSONP_PROVIDERS, SearchService, provide(RequestOptions, {
     useClass: JsonpOptions
+  }), provide(API_URL, {
+    useValue: 'http://redapesolutions.com/itunes'
   })]
 })
 export class ItunesAppComponent {
