@@ -8,7 +8,7 @@ import 'rxjs/add/operator/map';
 export class SearchService {
   constructor(private jsonp:Jsonp) {
   }
-  search(term:string) {
+  search(term:string):Observable<Track[]> {
     // API url
     // https://itunes.apple.com/search
     let params = new URLSearchParams();
