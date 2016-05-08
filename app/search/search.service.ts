@@ -9,14 +9,11 @@ export const API_URL = 'https://itunes.apple.com/search';
 @Injectable()
 export class SearchService {
   url = API_URL;
-  constructor(private jsonp:Jsonp) {
+  constructor(private jsonp:Jsonp, private ro:RequestOptions) {
   }
   search(term:string):Observable<Track[]> {
-    // API url
-    // https://itunes.apple.com/search
-    let params = new URLSearchParams();
+    let params = this.ro.search || new URLSearchParams();
     params.set('term', term);
-    params.set('callback', 'JSONP_CALLBACK');
     return this.jsonp.get(this.url, {
       search: params
     })
