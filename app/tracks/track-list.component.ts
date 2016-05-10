@@ -1,11 +1,10 @@
-import {Component, provide, Output, EventEmitter, Inject} from '@angular/core';
+import {Component, provide, Output, EventEmitter, Inject, ViewChildren, QueryList} from '@angular/core';
 import {SearchService} from '../search/search.service';
 import {JsonpOptions} from '../jsonp/jsonp.options';
 import {RequestOptions} from '@angular/http';
 import {Track} from './track.model';
-import {TrackComponent, TrackHolder} from './track.component';
+import {TrackComponent} from './track.component';
 import {USE_JSONP} from '../config';
-import {Logger, AlertLogger} from '../logger';
 
 @Component({
   selector: 'track-list',
@@ -17,24 +16,19 @@ import {Logger, AlertLogger} from '../logger';
     SearchService,
     provide(RequestOptions, {
       useClass: JsonpOptions
-    }),
-    provide(Logger, {
-      useFactory: () => {
-        return new AlertLogger();
-      }
     })
   ],
 })
 export class TrackListComponent {
   tracks:Track[];
   @Output('search-complete') searchComplete = new EventEmitter();
+  @ViewChildren(TrackComponent) trackComponents:QueryList<TrackComponent>;
 
-  constructor(private searchService:SearchService, @Inject(USE_JSONP) useJsonp:boolean, private logger:Logger) {
-    logger.log('Hello again');
+  constructor(private searchService:SearchService) {
   }
 
-  search(term:string):void {
-    this.searchService.search(term).subscribe((items) => {
+  search(term:string):Promise<void> {
+    return this.searchService.search(term).then((items) => {
       this.tracks = items;
       this.searchComplete.emit(term);
     });

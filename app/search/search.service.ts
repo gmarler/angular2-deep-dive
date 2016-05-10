@@ -14,12 +14,16 @@ export class SearchService {
       this.url = url;
     }
   }
-  search(term:string):Observable<Track[]> {
+  search(term:string):Promise<Track[]> {
     let params = this.ro.search || new URLSearchParams();
     params.set('term', term);
-    return this.jsonp.get(this.url, {
-      search: params
-    })
-      .map((response) => response.json().results);
+    return new Promise((resolve) => {
+      this.jsonp.get(this.url, {
+        search: params
+      })
+        .map((response) => response.json().results)
+        .map((results) => results.map((item) => Track.fromJson(item)))
+        .subscribe(resolve);
+    });
   }
 }
