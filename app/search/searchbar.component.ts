@@ -1,7 +1,8 @@
-import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {Component, Input, Output, EventEmitter, Inject, provide} from '@angular/core';
 import {HOVER_INPUT, FORM_STYLING} from '../styles/forms';
 import {BUTTONS} from '../styles/buttons';
-
+import {USE_JSONP} from '../config';
+import {Logger} from '../logger';
 
 @Component({
   selector: 'search-bar',
@@ -20,6 +21,10 @@ export class SearchBarComponent {
   @Input() term = '';
   @Output() termChange = new EventEmitter<string>();
   @Output('execute-search') execute = new EventEmitter<string>();
+
+  constructor(@Inject(USE_JSONP) useJsonp:boolean) {
+    console.log(`Searchbar: ${useJsonp}`);
+  }
 
   termHasChanged() {
     this.termChange.emit(this.term);

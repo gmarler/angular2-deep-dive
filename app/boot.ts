@@ -7,7 +7,10 @@ import {PLATFORM_DIRECTIVES, provide} from '@angular/core';
 import {ItunesAppComponent} from './app.component';
 import {AudioDirective} from './tracks/audio.directive';
 
-bootstrap(ItunesAppComponent, [provide(PLATFORM_DIRECTIVES, {useValue: AudioDirective, multi: true})])
+bootstrap(ItunesAppComponent, [provide(PLATFORM_DIRECTIVES, {
+  useValue: AudioDirective,
+  multi: true
+})])
   .then(function() {
     console.log('Itunes Browser is ready to go');
   }, function(err) {

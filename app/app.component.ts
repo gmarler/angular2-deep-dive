@@ -1,37 +1,41 @@
-import {Component, ElementRef, provide, Injector} from '@angular/core';
+import {Component, ElementRef, provide, ViewChild, Inject} from '@angular/core';
 import {Track} from './tracks/track.model';
 import {SearchBarComponent} from './search/searchbar.component';
 import {SearchService, API_URL} from './search/search.service';
-import {TrackComponent} from './tracks/track.component';
+import {TrackListComponent} from './tracks/track-list.component';
 import {JSONP_PROVIDERS, URLSearchParams, RequestOptions, BaseRequestOptions} from '@angular/http';
-
-class JsonpOptions extends BaseRequestOptions {
-  search = new URLSearchParams('callback=JSONP_CALLBACK');
-}
+import {USE_JSONP} from './config';
+import {Logger} from './logger';
 
 @Component({
   selector: 'itunes-browser',
   templateUrl: 'app/app.html',
-  directives: [SearchBarComponent, TrackComponent],
-  providers: [JSONP_PROVIDERS, SearchService, provide(RequestOptions, {
-    useClass: JsonpOptions
-  }), provide('CONFIGURABLE_API_URL', {
-    useValue: 'http://redapesolutions.com/itunes'
-  })]
+  directives: [SearchBarComponent, TrackListComponent],
+  providers: [JSONP_PROVIDERS, provide(USE_JSONP, {
+    useValue: true
+  })],
+  template: `
+  <header class="navbar">
+    <div class="navbar-header navbar-brand">Angular2 Deep Dive</div>
+  </header>
+  <div class="container form-inline">
+    <search-bar [(term)]="typedTerm" class="form-group" (execute-search)="runTheSearch($event)"></search-bar>
+    <h3 [hidden]="!searchTerm">Tracks containing "<span [innerText]="searchTerm"></span>"</h3>
+    <track-list></track-list>
+  </div>
+  `
 })
 export class ItunesAppComponent {
   public tracks:Track[] = [];
   public searchTerm = '';
   public typedTerm = '';
+  @ViewChild(TrackListComponent) trackList:TrackListComponent;
 
-  constructor(private searchService:SearchService, injector:Injector) {
-    // Uncomment this if you're insterested to see the injector's internal tokens to represent each provider
-    // console.log(injector._view);
-    // debugger;
-    // If using the string 'API_URL' in the DI, look for injector._view._API_URL_0_<some number here>
+  constructor(@Inject(USE_JSONP) useJsonp:boolean) {
+    console.log(`App: ${useJsonp}`);
   }
 
   runTheSearch(term:string) {
-    this.searchService.search(term).subscribe((items) => this.tracks = items);
+    this.trackList.search(term);
   }
 }
