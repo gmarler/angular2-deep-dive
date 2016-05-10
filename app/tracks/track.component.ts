@@ -7,6 +7,11 @@ import {CoolAudio} from './cool-audio.component';
 import {USE_JSONP} from '../config';
 import {Logger} from '../logger';
 
+@Injectable()
+export class TrackHolder {
+  track:Track;
+}
+
 @Component({
   selector: 'track-details',
   template: `
@@ -29,12 +34,12 @@ import {Logger} from '../logger';
   ]
 })
 class TrackDetails {
-  @Input('track') track: Track;
-
-  constructor() {
+  track:Track;
+  constructor(private trackHolder:TrackHolder) {
   }
 
   ngOnInit() {
+    this.track = this.trackHolder.track;
   }
 }
 
@@ -50,9 +55,12 @@ class TrackDetails {
   ]
 })
 class TrackImage {
-  @Input('track') track: Track;
+  track:Track;
+  constructor(private trackHolder:TrackHolder) {
+  }
 
-  constructor() {
+  ngOnInit() {
+    this.track = this.trackHolder.track;
   }
 }
 
@@ -72,18 +80,20 @@ class TrackImage {
   ],
   template: `
   <div class="row">
-    <track-image [track]="track"></track-image>
-    <track-details [track]="track"></track-details>
+    <track-image></track-image>
+    <track-details></track-details>
   </div>
-  `
+  `,
+  providers: [TrackHolder]
 })
 export class TrackComponent {
   @Input('track-model') track: Track;
 
-  constructor(@Inject(USE_JSONP) useJsonp:boolean) {
+  constructor(@Inject(USE_JSONP) useJsonp:boolean, private trackHolder:TrackHolder) {
     console.log(`Track row: ${useJsonp}`);
   }
 
   ngOnInit() {
+    this.trackHolder.track = this.track;
   }
 }
