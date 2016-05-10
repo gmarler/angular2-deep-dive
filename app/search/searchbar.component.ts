@@ -15,6 +15,16 @@ import {Logger} from '../logger';
     HOVER_INPUT,
     FORM_STYLING,
     BUTTONS
+  ],
+  providers: [
+    provide(Logger, {
+      useFactory: (useJsonp) => {
+        if(useJsonp) {
+          return new Logger('SB', 'color: blue');
+        }
+        return new Logger('SearchBar', 'color: maroon; font-size: 25px');
+      }
+    })
   ]
 })
 export class SearchBarComponent {
@@ -23,7 +33,6 @@ export class SearchBarComponent {
   @Output('execute-search') execute = new EventEmitter<string>();
 
   constructor(@Inject(USE_JSONP) useJsonp:boolean) {
-    console.log(`Searchbar: ${useJsonp}`);
   }
 
   termHasChanged() {

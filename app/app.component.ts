@@ -11,9 +11,17 @@ import {Logger} from './logger';
   selector: 'itunes-browser',
   templateUrl: 'app/app.html',
   directives: [SearchBarComponent, TrackListComponent],
-  providers: [JSONP_PROVIDERS, provide(USE_JSONP, {
-    useValue: true
-  })],
+  providers: [
+    JSONP_PROVIDERS,
+    provide(USE_JSONP, {
+      useValue: false
+    }),
+    provide(Logger, {
+      useFactory: () => {
+        return new Logger('APP', null);
+      }
+    })
+  ],
   template: `
   <header class="navbar">
     <div class="navbar-header navbar-brand">Angular2 Deep Dive</div>
@@ -31,8 +39,8 @@ export class ItunesAppComponent {
   public typedTerm = '';
   @ViewChild(TrackListComponent) trackList:TrackListComponent;
 
-  constructor(@Inject(USE_JSONP) useJsonp:boolean) {
-    console.log(`App: ${useJsonp}`);
+  constructor(@Inject(USE_JSONP) useJsonp:boolean, logger:Logger) {
+    logger.log('Hey there');
   }
 
   runTheSearch(term:string) {
