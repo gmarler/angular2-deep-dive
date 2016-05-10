@@ -39,10 +39,6 @@ export class ItunesAppComponent {
   public typedTerm = '';
   @ViewChild(TrackListComponent) trackList:TrackListComponent;
 
-  constructor(@Inject(USE_JSONP) useJsonp:boolean, logger:Logger) {
-    logger.log('Hey there');
-  }
-
   runTheSearch(term:string) {
     this.trackList.search(term);
   }

@@ -4,8 +4,6 @@ import {COLORS} from '../styles/colors';
 import {BOOTSTRAP_CORE} from '../styles/bootstrap';
 import {Track} from './track.model';
 import {CoolAudio} from './cool-audio.component';
-import {USE_JSONP} from '../config';
-import {Logger} from '../logger';
 
 @Injectable()
 export class TrackHolder {
@@ -89,8 +87,7 @@ class TrackImage {
 export class TrackComponent {
   @Input('track-model') track: Track;
 
-  constructor(@Inject(USE_JSONP) useJsonp:boolean, private trackHolder:TrackHolder, private logger:Logger) {
-    logger.log('Actually I m a row');
+  constructor(private trackHolder:TrackHolder) {
   }
 
   ngOnInit() {

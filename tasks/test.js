@@ -9,7 +9,7 @@ gulp.task('test', ['clean-report', 'unit-test']);
 gulp.task('unit-test', ['tsc'], function (done) {
     new Server({
         configFile: __dirname + '/../karma.conf.js',
-        singleRun: true
+        // singleRun: true
     }, karmaDone).start();
 
     function karmaDone (exitCode) {
