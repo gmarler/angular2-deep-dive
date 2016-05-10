@@ -3,7 +3,7 @@ import {SearchService} from '../search/search.service';
 import {JsonpOptions} from '../jsonp/jsonp.options';
 import {RequestOptions} from '@angular/http';
 import {Track} from './track.model';
-import {TrackComponent} from './track.component';
+import {TrackComponent, TrackHolder} from './track.component';
 import {USE_JSONP} from '../config';
 import {Logger, AlertLogger} from '../logger';
 
@@ -13,16 +13,24 @@ import {Logger, AlertLogger} from '../logger';
   <track-row *ngFor="let trackObj of tracks;" [track-model]="trackObj"></track-row>
   `,
   directives: [TrackComponent],
-  providers: [SearchService, provide(RequestOptions, {
-    useClass: JsonpOptions
-  })],
+  providers: [
+    SearchService,
+    provide(RequestOptions, {
+      useClass: JsonpOptions
+    }),
+    provide(Logger, {
+      useFactory: () => {
+        return new AlertLogger();
+      }
+    })
+  ],
 })
 export class TrackListComponent {
   tracks:Track[];
   @Output('search-complete') searchComplete = new EventEmitter();
 
-  constructor(private searchService:SearchService, @Inject(USE_JSONP) useJsonp:boolean) {
-    console.log(`TrackList: ${useJsonp}`);
+  constructor(private searchService:SearchService, @Inject(USE_JSONP) useJsonp:boolean, private logger:Logger) {
+    logger.log('Hello again');
   }
 
   search(term:string):void {

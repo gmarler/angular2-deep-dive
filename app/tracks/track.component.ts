@@ -1,4 +1,4 @@
-import {Component, Input, ElementRef, Injectable, Inject} from '@angular/core';
+import {Component, Input, ElementRef, Injectable, Inject, provide} from '@angular/core';
 import {GRID} from '../styles/grid/grid12';
 import {COLORS} from '../styles/colors';
 import {BOOTSTRAP_CORE} from '../styles/bootstrap';
@@ -89,8 +89,8 @@ class TrackImage {
 export class TrackComponent {
   @Input('track-model') track: Track;
 
-  constructor(@Inject(USE_JSONP) useJsonp:boolean, private trackHolder:TrackHolder) {
-    console.log(`Track row: ${useJsonp}`);
+  constructor(@Inject(USE_JSONP) useJsonp:boolean, private trackHolder:TrackHolder, private logger:Logger) {
+    logger.log('Actually I m a row');
   }
 
   ngOnInit() {
