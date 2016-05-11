@@ -64,6 +64,7 @@
     "jasmine-core": "~2.4.1",
     "karma": "~0.13.22",
     "karma-coverage": "~0.5.5",
+    "karma-html-detailed-reporter": "^1.1.8",
     "karma-ie-launcher": "^0.2.0",
     "karma-jasmine": "~0.3.7",
     "karma-phantomjs-launcher": "~1.0.0",
