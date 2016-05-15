@@ -28,3 +28,12 @@ footer {
     width: 20px;
   }
 }
+
+.navbar-nav > li > a {
+  font-size: 20px;
+  color: color(tertiary);
+  &.router-link-active {
+    background-color: color(tertiary);
+    color: color(secondary);
+  }
+}

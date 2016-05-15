@@ -1,17 +1,19 @@
-import {Component, ElementRef, provide, ViewChild, Inject} from '@angular/core';
+import {Component, ElementRef, provide, ViewChild, Inject, OnInit} from '@angular/core';
 import {Track} from './tracks/track.model';
-import {SearchBarComponent} from './search/searchbar.component';
 import {SearchService, API_URL} from './search/search.service';
-import {TrackListComponent} from './tracks/track-list.component';
+import {SearchPageComponent} from './search/searchpage.component';
+import {SettingsPageComponent} from './settings/settingspage.component';
+import {TrackPageComponent} from './tracks/trackpage.component';
 import {JSONP_PROVIDERS, URLSearchParams, RequestOptions, BaseRequestOptions} from '@angular/http';
 import {USE_JSONP} from './config';
 import {Logger} from './logger';
+import {ROUTER_PROVIDERS, ROUTER_DIRECTIVES, Routes, Router} from '@angular/router';
 
 @Component({
   selector: 'itunes-browser',
   templateUrl: 'app/app.html',
-  directives: [SearchBarComponent, TrackListComponent],
   providers: [
+    ROUTER_PROVIDERS,
     JSONP_PROVIDERS,
     provide(USE_JSONP, {
       useValue: false
@@ -25,21 +27,30 @@ import {Logger} from './logger';
   template: `
   <header class="navbar">
     <div class="navbar-header navbar-brand">Angular2 Deep Dive</div>
+    <ul class="nav navbar-nav">
+      <li>
+        <a [routerLink]="['/search']">Search</a>
+      </li>
+      <li>
+        <a [routerLink]="['/settings']">Settings</a>
+      </li>
+    </ul>
   </header>
-  <div class="container form-inline">
-    <search-bar [(term)]="typedTerm" class="form-group" (execute-search)="runTheSearch($event)"></search-bar>
-    <h3 [hidden]="!searchTerm">Tracks containing "<span [innerText]="searchTerm"></span>"</h3>
-    <track-list></track-list>
+  <div class="container">
+    <router-outlet></router-outlet>
   </div>
-  `
+  `,
+  directives: [ROUTER_DIRECTIVES]
 })
-export class ItunesAppComponent {
-  public tracks:Track[] = [];
-  public searchTerm = '';
-  public typedTerm = '';
-  @ViewChild(TrackListComponent) trackList:TrackListComponent;
+@Routes([
+  {path: '/search', component: SearchPageComponent},
+  {path: '/settings', component: SettingsPageComponent},
+  {path: '/track/:id', component: TrackPageComponent}
+])
+export class ItunesAppComponent implements OnInit {
+  constructor(private router:Router) {}
 
-  runTheSearch(term:string) {
-    this.trackList.search(term);
+  ngOnInit() {
+    this.router.navigate(['/search']);
   }
 }

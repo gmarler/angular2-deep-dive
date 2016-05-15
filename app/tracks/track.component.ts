@@ -1,4 +1,4 @@
-import {Component, Input, ElementRef, Injectable, Inject, provide} from '@angular/core';
+import {Component, Input, ElementRef, Injectable, Inject, provide, Output, EventEmitter} from '@angular/core';
 import {GRID} from '../styles/grid/grid12';
 import {COLORS} from '../styles/colors';
 import {BOOTSTRAP_CORE} from '../styles/bootstrap';
@@ -8,14 +8,23 @@ import {CoolAudio} from './cool-audio.component';
 @Injectable()
 export class TrackHolder {
   track:Track;
+  artistClicked:EventEmitter<Track>;
+  trackClicked:EventEmitter<Track>;
+  emitArtist() {
+    this.artistClicked.emit(this.track);
+  }
+  emitTrack() {
+    this.trackClicked.emit(this.track);
+  }
 }
 
 @Component({
   selector: 'track-details',
   template: `
   <div class="col-xs-8">
-    <p class="track" [innerText]="track.trackName"></p>
-    <p class="album" [innerHtml]="'<i>'+track.collectionName+'</i>'"></p>
+    <p class="track" (click)="trackHolder.emitTrack()" [innerText]="trackHolder.track.trackName"></p>
+    <p class="artist" (click)="trackHolder.emitArtist()" [innerText]="trackHolder.track.artistName"></p>
+    <p class="album" [innerText]="trackHolder.track.collectionName"></p>
   </div>
   `,
   styles: [
@@ -28,16 +37,16 @@ export class TrackHolder {
 
         .album {
           line-height: 16px;
-        }`
+          font-style: italic;
+        }
+        .artist {
+          font-weight: bold;
+        }
+        `
   ]
 })
 class TrackDetails {
-  track:Track;
   constructor(private trackHolder:TrackHolder) {
-  }
-
-  ngOnInit() {
-    this.track = this.trackHolder.track;
   }
 }
 
@@ -45,7 +54,7 @@ class TrackDetails {
   selector: 'track-image',
   template: `
   <div class="col-xs-3">
-    <img [src]="track.artworkUrl100">
+    <img [src]="trackHolder.track.artworkUrl100" (click)="trackHolder.emitTrack()">
   </div>
   `,
   styles: [
@@ -53,12 +62,7 @@ class TrackDetails {
   ]
 })
 class TrackImage {
-  track:Track;
   constructor(private trackHolder:TrackHolder) {
-  }
-
-  ngOnInit() {
-    this.track = this.trackHolder.track;
   }
 }
 
@@ -86,11 +90,15 @@ class TrackImage {
 })
 export class TrackComponent {
   @Input('track-model') track: Track;
+  @Output('track-clicked') trackClicked = new EventEmitter<Track>();
+  @Output('artist-clicked') artistClicked = new EventEmitter<Track>();
 
   constructor(private trackHolder:TrackHolder) {
   }
 
   ngOnInit() {
     this.trackHolder.track = this.track;
+    this.trackHolder.trackClicked = this.trackClicked;
+    this.trackHolder.artistClicked = this.artistClicked;
   }
 }

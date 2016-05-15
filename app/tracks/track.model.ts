@@ -1,4 +1,5 @@
 export class Track {
+  trackId:number;
   collectionName:string;
   artistName:string;
   trackName:string;
