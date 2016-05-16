@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FORM_PROVIDERS, FORM_DIRECTIVES, FormBuilder, ControlGroup, Control} from '@angular/common';
+import {FORM_PROVIDERS, FORM_DIRECTIVES, FormBuilder, ControlGroup, Control, Validators} from '@angular/common';
 import {SettingsService, COUNTRIES, Country} from './settings.service';
 import {Router, ROUTER_DIRECTIVES} from '@angular/router';
 
@@ -15,14 +15,14 @@ import {Router, ROUTER_DIRECTIVES} from '@angular/router';
       <button class="btn btn-default" (click)="save()">Save</button>
     </form>
   `,
-  directives: [FORM_DIRECTIVES, ROUTER_DIRECTIVES],
+  directives: [FORM_DIRECTIVES],
   providers: [FORM_PROVIDERS, SettingsService]
 })
 export class SettingsPageComponent implements OnInit {
   country:string;
   settingsForm:ControlGroup;
   countries:Country[] = [];
-  constructor(private fb:FormBuilder, private settingsService:SettingsService, private router:Router) {}
+  constructor(private fb:FormBuilder, private settingsService:SettingsService) {}
 
   ngOnInit() {
     for(let key in COUNTRIES) {
@@ -37,6 +37,5 @@ export class SettingsPageComponent implements OnInit {
 
   save() {
     this.settingsService.setByCode(this.settingsForm.value.country);
-    this.router.navigate(['/search']);
   }
 }

@@ -5,52 +5,32 @@ import {SearchPageComponent} from './search/searchpage.component';
 import {SettingsPageComponent} from './settings/settingspage.component';
 import {TrackPageComponent} from './tracks/trackpage.component';
 import {JSONP_PROVIDERS, URLSearchParams, RequestOptions, BaseRequestOptions} from '@angular/http';
-import {USE_JSONP} from './config';
-import {Logger} from './logger';
 import {ROUTER_PROVIDERS, ROUTER_DIRECTIVES, Routes, Router} from '@angular/router';
 
 @Component({
   selector: 'itunes-browser',
   templateUrl: 'app/app.html',
   providers: [
-    ROUTER_PROVIDERS,
-    JSONP_PROVIDERS,
-    provide(USE_JSONP, {
-      useValue: false
-    }),
-    provide(Logger, {
-      useFactory: () => {
-        return new Logger('APP', null);
-      }
-    })
+    JSONP_PROVIDERS
   ],
   template: `
   <header class="navbar">
     <div class="navbar-header navbar-brand">Angular2 Deep Dive</div>
     <ul class="nav navbar-nav">
       <li>
-        <a [routerLink]="['/search']">Search</a>
       </li>
       <li>
-        <a [routerLink]="['/settings']">Settings</a>
       </li>
     </ul>
   </header>
   <div class="container">
-    <router-outlet></router-outlet>
   </div>
   `,
-  directives: [ROUTER_DIRECTIVES]
+  directives: []
 })
-@Routes([
-  {path: '/search', component: SearchPageComponent},
-  {path: '/settings', component: SettingsPageComponent},
-  {path: '/track/:id', component: TrackPageComponent}
-])
 export class ItunesAppComponent implements OnInit {
-  constructor(private router:Router) {}
+  constructor() {}
 
   ngOnInit() {
-    this.router.navigate(['/search']);
   }
 }
