@@ -6,13 +6,15 @@ import {SettingsPageComponent} from './settings/settingspage.component';
 import {TrackPageComponent} from './tracks/trackpage.component';
 import {JSONP_PROVIDERS, URLSearchParams, RequestOptions, BaseRequestOptions} from '@angular/http';
 import {ROUTER_PROVIDERS, ROUTER_DIRECTIVES, Routes, Router} from '@angular/router';
+import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 
 @Component({
   selector: 'itunes-browser',
   templateUrl: 'app/app.html',
   providers: [
     JSONP_PROVIDERS,
-    ROUTER_PROVIDERS
+    ROUTER_PROVIDERS,
+    provide(LocationStrategy, {useClass: HashLocationStrategy})
   ],
   template: `
   <header class="navbar">

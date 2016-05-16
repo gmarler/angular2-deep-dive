@@ -9,6 +9,7 @@ import {Router, ROUTER_DIRECTIVES} from '@angular/router';
       <div class="form-group">
         <label>Please pick the iTunes API country</label>
         <select class="form-control" ngControl="country">
+          <option value="">Select...</option>
           <option *ngFor="let country of countries" [value]="country.code">{{country.name}}</option>
         </select>
       </div>
@@ -31,11 +32,15 @@ export class SettingsPageComponent implements OnInit {
       }
     }
     this.settingsForm = this.fb.group({
-      country: [this.settingsService.country.code]
+      country: [this.settingsService.country.code, Validators.required]
     });
   }
 
   save() {
+    if(!this.settingsForm.valid) {
+      window.alert('Pick a country');
+      return;
+    }
     this.settingsService.setByCode(this.settingsForm.value.country);
     this.router.navigate(['/search']);
   }
