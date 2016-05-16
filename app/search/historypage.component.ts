@@ -5,7 +5,7 @@ import {Router, ROUTER_DIRECTIVES} from '@angular/router';
   template: `
     <ul>
       <li *ngFor="let term of terms">
-        <a>{{term}}</a>
+        <a [routerLink]="['/search', {term:term}]">{{term}}</a>
       </li>
     </ul>
     `,

@@ -14,6 +14,10 @@ export class SearchPageComponent {
   @ViewChild(TrackListComponent) list:TrackListComponent;
   constructor() {}
 
+  routerOnActivate(segment:RouteSegment) {
+    this.typedTerm = segment.getParam('term') || '';
+  }
+
   runTheSearch(term:string) {
     this.list.search(term);
   }
