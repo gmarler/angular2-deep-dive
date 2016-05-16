@@ -11,26 +11,35 @@ import {ROUTER_PROVIDERS, ROUTER_DIRECTIVES, Routes, Router} from '@angular/rout
   selector: 'itunes-browser',
   templateUrl: 'app/app.html',
   providers: [
-    JSONP_PROVIDERS
+    JSONP_PROVIDERS,
+    ROUTER_PROVIDERS
   ],
   template: `
   <header class="navbar">
     <div class="navbar-header navbar-brand">Angular2 Deep Dive</div>
     <ul class="nav navbar-nav">
       <li>
+        <a routerLink="/search">Search</a>
       </li>
       <li>
+        <a [routerLink]="['/settings']">Settings</a>
       </li>
     </ul>
   </header>
   <div class="container">
+    <router-outlet></router-outlet>
   </div>
   `,
-  directives: []
+  directives: [ROUTER_DIRECTIVES]
 })
+@Routes([
+  {path: '/search', component: SearchPageComponent},
+  {path: '/settings', component: SettingsPageComponent}
+])
 export class ItunesAppComponent implements OnInit {
-  constructor() {}
+  constructor(private router:Router) {}
 
   ngOnInit() {
+    this.router.navigateByUrl('/search');
   }
 }

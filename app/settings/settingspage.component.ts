@@ -22,7 +22,7 @@ export class SettingsPageComponent implements OnInit {
   country:string;
   settingsForm:ControlGroup;
   countries:Country[] = [];
-  constructor(private fb:FormBuilder, private settingsService:SettingsService) {}
+  constructor(private fb:FormBuilder, private settingsService:SettingsService, private router:Router) {}
 
   ngOnInit() {
     for(let key in COUNTRIES) {
@@ -37,5 +37,6 @@ export class SettingsPageComponent implements OnInit {
 
   save() {
     this.settingsService.setByCode(this.settingsForm.value.country);
+    this.router.navigate(['/search']);
   }
 }
