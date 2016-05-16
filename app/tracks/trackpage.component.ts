@@ -3,7 +3,7 @@ import {RouteSegment, OnActivate, Routes, ROUTER_DIRECTIVES} from '@angular/rout
 
 @Injectable()
 class TrackHolder {
-  trackId:number;
+  trackId:string;
 }
 
 @Component({
@@ -15,23 +15,24 @@ class TrackDetailsComponent {
 }
 
 @Component({
-  template: `Artist details`
+  selector: 'track-artist',
+  template: `Artist details for song ... we need the id here...`
 })
 class TrackArtistComponent {
-  constructor(track:TrackHolder) {
+  constructor() {
   }
 }
 
 @Component({
   template: `
-    Here's the id: {{id}}. What do you want to see?
-    <div>
+    Here's the id: {{id}}.
+    <track-artist></track-artist>
     <div>
   `,
-  directives: [],
-  providers: [TrackHolder]
+  directives: [TrackArtistComponent],
+  providers: []
 })
 export class TrackPageComponent {
-  id:number;
-  constructor(private track:TrackHolder) {}
+  id:string;
+  constructor() {}
 }

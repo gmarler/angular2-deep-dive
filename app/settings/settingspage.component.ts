@@ -9,7 +9,7 @@ import {Router, ROUTER_DIRECTIVES} from '@angular/router';
       <div class="form-group">
         <label>Please pick the iTunes API country</label>
         <select class="form-control" ngControl="country">
-          <option value="">Select...</option>
+          <option value="FL">Factorio Land</option>
           <option *ngFor="let country of countries" [value]="country.code">{{country.name}}</option>
         </select>
       </div>

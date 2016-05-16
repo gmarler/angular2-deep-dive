@@ -1,4 +1,4 @@
-import {Component, Input, Output, EventEmitter, Inject, provide} from '@angular/core';
+import {Component, Input, Output, EventEmitter, OnChanges, SimpleChange} from '@angular/core';
 import {HOVER_INPUT, FORM_STYLING} from '../styles/forms';
 import {BUTTONS} from '../styles/buttons';
 

@@ -3,6 +3,7 @@ import {Track} from './tracks/track.model';
 import {SearchService, API_URL} from './search/search.service';
 import {SearchPageComponent} from './search/searchpage.component';
 import {SettingsPageComponent} from './settings/settingspage.component';
+import {HistoryPageComponent} from './search/historypage.component';
 import {TrackPageComponent} from './tracks/trackpage.component';
 import {JSONP_PROVIDERS, URLSearchParams, RequestOptions, BaseRequestOptions} from '@angular/http';
 import {ROUTER_PROVIDERS, ROUTER_DIRECTIVES, Routes, Router} from '@angular/router';
@@ -24,7 +25,10 @@ import {LocationStrategy, HashLocationStrategy} from '@angular/common';
         <a routerLink="/search">Search</a>
       </li>
       <li>
-        <a [routerLink]="['/settings']">Settings</a>
+        <a routerLink="/settings">Settings</a>
+      </li>
+      <li>
+        <a routerLink="/history">History</a>
       </li>
     </ul>
   </header>
@@ -36,7 +40,8 @@ import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 })
 @Routes([
   {path: '/search', component: SearchPageComponent},
-  {path: '/settings', component: SettingsPageComponent}
+  {path: '/settings', component: SettingsPageComponent},
+  {path: '/history', component: HistoryPageComponent}
 ])
 export class ItunesAppComponent implements OnInit {
   constructor(private router:Router) {}
