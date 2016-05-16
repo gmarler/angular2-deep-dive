@@ -32,7 +32,11 @@ class TrackArtistComponent {
   directives: [TrackArtistComponent],
   providers: []
 })
-export class TrackPageComponent {
+export class TrackPageComponent implements OnActivate {
   id:string;
   constructor() {}
+
+  routerOnActivate(segment:RouteSegment) {
+    this.id = segment.getParam('id');
+  }
 }

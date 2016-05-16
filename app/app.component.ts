@@ -41,7 +41,8 @@ import {LocationStrategy, HashLocationStrategy} from '@angular/common';
 @Routes([
   {path: '/search', component: SearchPageComponent},
   {path: '/settings', component: SettingsPageComponent},
-  {path: '/history', component: HistoryPageComponent}
+  {path: '/history', component: HistoryPageComponent},
+  {path: '/track/:id', component: TrackPageComponent}
 ])
 export class ItunesAppComponent implements OnInit {
   constructor(private router:Router) {}
