@@ -11,7 +11,11 @@ class TrackHolder {
 })
 class TrackDetailsComponent {
   id:string;
-  constructor() {
+  constructor(private trackHolder:TrackHolder) {
+  }
+
+  ngOnInit() {
+    this.id = this.trackHolder.trackId;
   }
 }
 
@@ -21,7 +25,11 @@ class TrackDetailsComponent {
 })
 class TrackArtistComponent {
   id:string;
-  constructor() {
+  constructor(private trackHolder:TrackHolder) {
+  }
+
+  ngOnInit() {
+    this.id = this.trackHolder.trackId;
   }
 }
 
@@ -31,7 +39,11 @@ class TrackArtistComponent {
 })
 class TrackAlbumComponent {
   id:string;
-  constructor() {
+  constructor(private trackHolder:TrackHolder) {
+  }
+
+  ngOnInit() {
+    this.id = this.trackHolder.trackId;
   }
 }
 
@@ -47,7 +59,7 @@ class TrackAlbumComponent {
     </div>
   `,
   directives: [ROUTER_DIRECTIVES],
-  providers: []
+  providers: [TrackHolder]
 })
 @Routes([
   {path: '/details', component: TrackDetailsComponent},
@@ -56,9 +68,10 @@ class TrackAlbumComponent {
 ])
 export class TrackPageComponent implements OnActivate {
   id:string;
-  constructor() {}
+  constructor(private trackHolder:TrackHolder) {}
 
   routerOnActivate(segment:RouteSegment) {
     this.id = segment.getParam('id');
+    this.trackHolder.trackId = this.id;
   }
 }
