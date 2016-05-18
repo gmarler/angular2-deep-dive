@@ -1,5 +1,5 @@
 import {Component, Injectable} from '@angular/core';
-import {RouteSegment, OnActivate, Routes, ROUTER_DIRECTIVES} from '@angular/router';
+import {RouteSegment, OnActivate, Routes, Router, ROUTER_DIRECTIVES, ROUTER_PROVIDERS} from '@angular/router';
 
 @Injectable()
 class TrackHolder {
@@ -7,29 +7,45 @@ class TrackHolder {
 }
 
 @Component({
-  template: `More information about the song`
+  template: `More information about the song {{id}}`
 })
 class TrackDetailsComponent {
-  constructor(track:TrackHolder) {
+  id:string;
+  constructor() {
   }
 }
 
 @Component({
   selector: 'track-artist',
-  template: `Artist details for song ... we need the id here...`
+  template: `Artist details for song {{id}}`
 })
 class TrackArtistComponent {
+  id:string;
+  constructor() {
+  }
+}
+
+@Component({
+  selector: 'track-album',
+  template: `Album details for song {{id}}`
+})
+class TrackAlbumComponent {
+  id:string;
   constructor() {
   }
 }
 
 @Component({
   template: `
-    Here's the id: {{id}}.
-    <track-artist></track-artist>
+    Here's the id: {{id}}. What would you like to see?
+    <a>Details</a>
+    <a>Artist</a>
+    <a>Album</a>
+    <a>Back to search</a>
     <div>
+    </div>
   `,
-  directives: [TrackArtistComponent],
+  directives: [ROUTER_DIRECTIVES],
   providers: []
 })
 export class TrackPageComponent implements OnActivate {
