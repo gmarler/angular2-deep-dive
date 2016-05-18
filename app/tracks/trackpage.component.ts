@@ -38,16 +38,22 @@ class TrackAlbumComponent {
 @Component({
   template: `
     Here's the id: {{id}}. What would you like to see?
-    <a>Details</a>
-    <a>Artist</a>
-    <a>Album</a>
-    <a>Back to search</a>
+    <a [routerLink]="['./details']">Details</a>
+    <a [routerLink]="['./artist']">Artist</a>
+    <a [routerLink]="['./album']">Album</a>
+    <a [routerLink]="['../../search']">Back to search</a>
     <div>
+      <router-outlet></router-outlet>
     </div>
   `,
   directives: [ROUTER_DIRECTIVES],
   providers: []
 })
+@Routes([
+  {path: '/details', component: TrackDetailsComponent},
+  {path: '/artist', component: TrackArtistComponent},
+  {path: '/album', component: TrackAlbumComponent}
+])
 export class TrackPageComponent implements OnActivate {
   id:string;
   constructor() {}

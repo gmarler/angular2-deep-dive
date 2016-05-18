@@ -36,9 +36,10 @@ export class TrackListComponent {
   }
 
   onTrackClicked(track:Track) {
-    this.router.navigate(['/track', track.trackId]);
+    this.router.navigate(['/track', track.trackId, 'details']);
   }
 
   onArtistClicked(track:Track) {
+    this.router.navigate(['/track', track.trackId, 'artist']);
   }
 }
