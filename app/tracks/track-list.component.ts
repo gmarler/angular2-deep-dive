@@ -18,12 +18,22 @@ import {USE_JSONP} from '../config';
   directives: [TrackComponent, ROUTER_DIRECTIVES],
   providers: [],
 })
-export class TrackListComponent {
+export class TrackListComponent implements AfterViewInit, OnInit, AfterViewChecked {
   tracks:Track[];
   @Output('search-complete') searchComplete = new EventEmitter();
   @ViewChildren(TrackComponent) trackComponents:QueryList<TrackComponent>;
 
   constructor(private searchService:SearchService, private router:Router) {
+  }
+
+  ngOnInit() {
+    console.log('Init', this.trackComponents);
+  }
+  ngAfterViewInit() {
+    console.log(this.trackComponents.length);
+  }
+  ngAfterViewChecked() {
+    console.log('Checked...', this.trackComponents);
   }
 
   search(term:string):Promise<void> {

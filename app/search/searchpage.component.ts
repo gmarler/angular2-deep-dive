@@ -9,10 +9,20 @@ import {Router, RouteSegment, OnActivate, CanDeactivate, RouteTree} from '@angul
     <track-list></track-list>`,
   directives: [SearchBarComponent, TrackListComponent]
 })
-export class SearchPageComponent {
+export class SearchPageComponent implements CanDeactivate {
   typedTerm:string;
   @ViewChild(TrackListComponent) list:TrackListComponent;
   constructor() {}
+
+  routerCanDeactivate():Promise<boolean> {
+    console.log('Loading');
+    return new Promise((resolve) => {
+      setTimeout(() => {
+        console.log('Done loading');
+        resolve(true);
+      }, 3);
+    });
+  }
 
   routerOnActivate(segment:RouteSegment) {
     this.typedTerm = segment.getParam('term') || '';
