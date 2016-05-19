@@ -1,7 +1,7 @@
-import {Component, ViewChild, AfterViewInit} from '@angular/core';
+import {Component, Input, ViewChild, AfterViewInit, OnChanges} from '@angular/core';
 import {SearchBarComponent} from './searchbar.component';
 import {TrackListComponent} from '../tracks/track-list.component';
-import {Router, RouteSegment, OnActivate} from '@angular/router';
+import {Router, RouteSegment, OnActivate, CanDeactivate, RouteTree} from '@angular/router';
 
 @Component({
   template: `
@@ -10,7 +10,7 @@ import {Router, RouteSegment, OnActivate} from '@angular/router';
   directives: [SearchBarComponent, TrackListComponent]
 })
 export class SearchPageComponent {
-  typedTerm = '';
+  typedTerm:string;
   @ViewChild(TrackListComponent) list:TrackListComponent;
   constructor() {}
 

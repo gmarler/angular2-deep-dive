@@ -4,6 +4,7 @@ import {SearchService, API_URL} from './search/search.service';
 import {SearchPageComponent} from './search/searchpage.component';
 import {SettingsPageComponent} from './settings/settingspage.component';
 import {HistoryPageComponent} from './search/historypage.component';
+import {JsonpOptions} from './jsonp/jsonp.options';
 import {TrackPageComponent} from './tracks/trackpage.component';
 import {JSONP_PROVIDERS, URLSearchParams, RequestOptions, BaseRequestOptions} from '@angular/http';
 import {ROUTER_PROVIDERS, ROUTER_DIRECTIVES, Routes, Router} from '@angular/router';
@@ -13,7 +14,11 @@ import {ROUTER_PROVIDERS, ROUTER_DIRECTIVES, Routes, Router} from '@angular/rout
   templateUrl: 'app/app.html',
   providers: [
     JSONP_PROVIDERS,
-    ROUTER_PROVIDERS
+    ROUTER_PROVIDERS,
+    SearchService,
+    provide(RequestOptions, {
+      useClass: JsonpOptions
+    })
   ],
   template: `
   <header class="navbar">

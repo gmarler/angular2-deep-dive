@@ -1,11 +1,14 @@
-import {Component, provide, Output, EventEmitter, Inject, ViewChildren, QueryList} from '@angular/core';
+import {Component, provide, Output, Input, EventEmitter, Inject, ViewChildren, QueryList, ChangeDetectionStrategy, ChangeDetectorRef,
+  AfterViewChecked,
+  AfterViewInit,
+  OnInit
+} from '@angular/core';
 import {SearchService} from '../search/search.service';
-import {JsonpOptions} from '../jsonp/jsonp.options';
-import {RequestOptions} from '@angular/http';
 import {Track} from './track.model';
 import {TrackComponent} from './track.component';
 import {Router, ROUTER_DIRECTIVES} from '@angular/router';
 import {USE_JSONP} from '../config';
+
 
 @Component({
   selector: 'track-list',
@@ -13,12 +16,7 @@ import {USE_JSONP} from '../config';
   <track-row (track-clicked)="onTrackClicked($event)" (artist-clicked)="onArtistClicked($event)" *ngFor="let trackObj of tracks;" [track-model]="trackObj"></track-row>
   `,
   directives: [TrackComponent, ROUTER_DIRECTIVES],
-  providers: [
-    SearchService,
-    provide(RequestOptions, {
-      useClass: JsonpOptions
-    })
-  ],
+  providers: [],
 })
 export class TrackListComponent {
   tracks:Track[];
