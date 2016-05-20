@@ -17,30 +17,30 @@ import {CoolAudio} from './cool-audio.component';
       border-bottom: dotted 1px ${COLORS.quinary};
     }
     .track {
-          font-size: 120%;
-          margin-bottom: 0;
-        }
+      font-size: 120%;
+      margin-bottom: 0;
+    }
 
-        .album {
-          line-height: 16px;
-          font-style: italic;
-        }
-        .artist {
-          font-weight: bold;
-        }
-        `
+    .album {
+      line-height: 16px;
+      font-style: italic;
+    }
+    .artist {
+      font-weight: bold;
+    }
+    `
   ],
   template: `
   <div class="row">
     <div class="col-xs-3">
       <img [src]="track.artworkUrl100" (click)="trackClicked.emit(track)">
-  </div>
+    </div>
     <div class="col-xs-8">
       <p class="track" (click)="trackClicked.emit(track)" [innerText]="track.trackName"></p>
       <p class="artist" (click)="artistClicked.emit(track)" [innerText]="track.artistName"></p>
       <p class="album">
         <span [innerText]="track.collectionName"></span>
-        Released: {{track.releaseDate | date | uppercase}}
+        Released: {{track.releaseDate | date:dateFormat | uppercase}}
       </p>
     </div>
   </div>

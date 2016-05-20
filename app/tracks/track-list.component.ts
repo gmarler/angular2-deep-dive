@@ -8,16 +8,15 @@ import {TrackComponent} from './track.component';
 import {Router, ROUTER_DIRECTIVES} from '@angular/router';
 import {USE_JSONP} from '../config';
 
-
 @Component({
   selector: 'track-list',
   template: `
-  <track-row (track-clicked)="onTrackClicked($event)" (artist-clicked)="onArtistClicked($event)" *ngFor="let trackObj of tracks;" [track-model]="trackObj"></track-row>
   <div>
   Display date format:
   <input type="radio" (click)="formatSelected($event)" name="dateFormat" value="shortDate" checked="checked">Short
   <input type="radio" (click)="formatSelected($event)" name="dateFormat" value="longDate">Long
   </div>
+  <track-row (track-clicked)="onTrackClicked($event)" (artist-clicked)="onArtistClicked($event)" *ngFor="let trackObj of tracks;" [track-model]="trackObj" [date-format]="dateFormat"></track-row>
   `,
   directives: [TrackComponent, ROUTER_DIRECTIVES],
   providers: [],
