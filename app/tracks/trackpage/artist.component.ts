@@ -12,8 +12,8 @@ import {SearchService} from '../../search/search.service';
     }`
   ],
   template: `Artist details for <b>{{track.trackName}}</b>:
-    <p class="name">{{track.artist.artistName}}</p>
-    <p>Main genre: {{track.artist.primaryGenreName}}
+    <p class="name">{{track.artist?.artistName}}</p>
+    <p>Main genre: {{track.artist?.primaryGenreName}}
   `
 })
 export class TrackArtistComponent {
