@@ -3,6 +3,7 @@ import {TrackHolder} from './track.service';
 import {Track} from '../track.model';
 import {SearchService} from '../../search/search.service';
 import {SettingsService} from '../../settings/settings.service';
+import {CurrencySymbol} from './currencysymbol.pipe';
 
 @Component({
   selector: 'track-artist',
@@ -30,11 +31,12 @@ import {SettingsService} from '../../settings/settings.service';
         </div>
         <div class="col-xs-8">
           <p class="album">{{album.collectionName}}</p>
-          <p>Price: {{album.collectionPrice}}{{album.currency}}</p>
+          <p>Price: {{album.collectionPrice}}{{album.currency|symbol}}</p>
         </div>
       </li>
     </ul>
-  `
+  `,
+  pipes: [CurrencySymbol]
 })
 export class TrackArtistComponent {
   track = new Track();
