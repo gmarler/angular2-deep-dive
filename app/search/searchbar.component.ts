@@ -15,14 +15,10 @@ import {BUTTONS} from '../styles/buttons';
     BUTTONS
   ]
 })
-export class SearchBarComponent implements OnChanges {
+export class SearchBarComponent {
   @Input() term = '';
   @Output() termChange = new EventEmitter<string>();
   @Output('execute-search') execute = new EventEmitter<string>();
-
-  ngOnChanges(changes:{[propertyName: string]: SimpleChange}) {
-    console.log(changes['term']);
-  }
 
   termHasChanged() {
     this.termChange.emit(this.term);

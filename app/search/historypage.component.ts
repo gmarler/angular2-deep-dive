@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Router, ROUTER_DIRECTIVES} from '@angular/router';
+import {HistoryService} from './history.service';
 
 @Component({
   template: `
@@ -12,9 +13,9 @@ import {Router, ROUTER_DIRECTIVES} from '@angular/router';
     directives: [ROUTER_DIRECTIVES]
 })
 export class HistoryPageComponent implements OnInit {
-  terms:string[] = [];
-  constructor(private router:Router) {}
+  terms:string[];
+  constructor(private router:Router, private historyService:HistoryService) {}
   ngOnInit() {
-    this.terms = ['massive', 'portishead', 'morcheeba'];
+    this.terms = this.historyService.searches;
   }
 }

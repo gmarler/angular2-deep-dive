@@ -1,11 +1,13 @@
 import {Component, ElementRef, provide, ViewChild, Inject, OnInit} from '@angular/core';
 import {Track} from './tracks/track.model';
 import {SearchService, API_URL} from './search/search.service';
+import {HistoryService} from './search/history.service';
+import {SettingsService} from './settings/settings.service';
 import {SearchPageComponent} from './search/searchpage.component';
 import {SettingsPageComponent} from './settings/settingspage.component';
 import {HistoryPageComponent} from './search/historypage.component';
 import {JsonpOptions} from './jsonp/jsonp.options';
-import {TrackPageComponent} from './tracks/trackpage.component';
+import {TrackPageComponent} from './tracks/trackpage/trackpage.component';
 import {JSONP_PROVIDERS, URLSearchParams, RequestOptions, BaseRequestOptions} from '@angular/http';
 import {ROUTER_PROVIDERS, ROUTER_DIRECTIVES, Routes, Router} from '@angular/router';
 
@@ -16,6 +18,8 @@ import {ROUTER_PROVIDERS, ROUTER_DIRECTIVES, Routes, Router} from '@angular/rout
     JSONP_PROVIDERS,
     ROUTER_PROVIDERS,
     SearchService,
+    SettingsService,
+    HistoryService,
     provide(RequestOptions, {
       useClass: JsonpOptions
     })

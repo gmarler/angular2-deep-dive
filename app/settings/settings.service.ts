@@ -18,7 +18,7 @@ export const COUNTRIES:{[property:string]:Country} = {
     name: 'United Kingdom',
     currency: 'GBP',
     code: 'GB',
-    currencySymbol: '$'
+    currencySymbol: '£',
   },
   CH: {
     name: 'Switzerland',

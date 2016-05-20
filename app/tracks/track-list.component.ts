@@ -1,7 +1,6 @@
 import {Component, provide, Output, Input, EventEmitter, Inject, ViewChildren, QueryList, ChangeDetectionStrategy, ChangeDetectorRef,
-  AfterViewChecked,
-  AfterViewInit,
-  OnInit
+  OnInit,
+  ElementRef,
 } from '@angular/core';
 import {SearchService} from '../search/search.service';
 import {Track} from './track.model';
@@ -14,12 +13,18 @@ import {USE_JSONP} from '../config';
   selector: 'track-list',
   template: `
   <track-row (track-clicked)="onTrackClicked($event)" (artist-clicked)="onArtistClicked($event)" *ngFor="let trackObj of tracks;" [track-model]="trackObj"></track-row>
+  <div>
+  Display date format:
+  <input type="radio" (click)="formatSelected($event)" name="dateFormat" value="shortDate" checked="checked">Short
+  <input type="radio" (click)="formatSelected($event)" name="dateFormat" value="longDate">Long
+  </div>
   `,
   directives: [TrackComponent, ROUTER_DIRECTIVES],
   providers: [],
 })
-export class TrackListComponent implements AfterViewInit, OnInit, AfterViewChecked {
+export class TrackListComponent implements OnInit {
   tracks:Track[];
+  dateFormat = 'shortDate';
   @Output('search-complete') searchComplete = new EventEmitter();
   @ViewChildren(TrackComponent) trackComponents:QueryList<TrackComponent>;
 
@@ -27,13 +32,11 @@ export class TrackListComponent implements AfterViewInit, OnInit, AfterViewCheck
   }
 
   ngOnInit() {
-    console.log('Init', this.trackComponents);
+    this.tracks = this.searchService.tracks;
   }
-  ngAfterViewInit() {
-    console.log(this.trackComponents.length);
-  }
-  ngAfterViewChecked() {
-    console.log('Checked...', this.trackComponents);
+
+  formatSelected(e:MouseEvent) {
+    this.dateFormat = e.toElement.getAttribute('value');
   }
 
   search(term:string):Promise<void> {

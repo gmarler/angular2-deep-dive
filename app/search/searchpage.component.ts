@@ -1,5 +1,6 @@
 import {Component, Input, ViewChild, AfterViewInit, OnChanges} from '@angular/core';
 import {SearchBarComponent} from './searchbar.component';
+import {HistoryService} from './history.service';
 import {TrackListComponent} from '../tracks/track-list.component';
 import {Router, RouteSegment, OnActivate, CanDeactivate, RouteTree} from '@angular/router';
 
@@ -9,26 +10,21 @@ import {Router, RouteSegment, OnActivate, CanDeactivate, RouteTree} from '@angul
     <track-list></track-list>`,
   directives: [SearchBarComponent, TrackListComponent]
 })
-export class SearchPageComponent implements CanDeactivate {
+export class SearchPageComponent implements OnActivate {
   typedTerm:string;
   @ViewChild(TrackListComponent) list:TrackListComponent;
-  constructor() {}
-
-  routerCanDeactivate():Promise<boolean> {
-    console.log('Loading');
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        console.log('Done loading');
-        resolve(true);
-      }, 3);
-    });
-  }
+  constructor(private historyService:HistoryService) {}
 
   routerOnActivate(segment:RouteSegment) {
     this.typedTerm = segment.getParam('term') || '';
   }
 
+  clearTerm() {
+    this.typedTerm = '';
+  }
+
   runTheSearch(term:string) {
-    this.list.search(term);
+    this.historyService.add(term);
+    this.list.search(term).then(() => this.clearTerm());
   }
 }

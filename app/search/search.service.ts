@@ -9,7 +9,7 @@ export const API_URL = 'https://itunes.apple.com/';
 @Injectable()
 export class SearchService {
   url = API_URL;
-
+  tracks:Track[] = [];
   constructor(private jsonp:Jsonp, private ro:RequestOptions, @Optional() @Inject('CONFIGURABLE_API_URL') url:string) {
     if(url) {
       this.url = url;
@@ -20,18 +20,25 @@ export class SearchService {
     return this._getThing<Track>(id, Track);
   }
 
+  // Note that TypeScript infers the return type if only one return (or all returns have the same type) so we don't have to specify it ourselves if we don't want to
   getArtist(id:string|number) {
     return this._getThing<Artist>(id.toString(), Artist);
   }
 
   search(term:string):Promise<Track[]> {
-    let params = this.ro.search || new URLSearchParams();
+    let params = new URLSearchParams();
     params.set('term', term);
     return this._makeCall('search', params)
-      .then((results) => results.map((item) => Track.fromJson(item)));
+      .then((results) => results.map((item) => Track.fromJson(item)))
+      .then(tracks => {
+        this.tracks = tracks;
+        return tracks;
+      });
   }
 
   private _makeCall(endpoint:string, params:URLSearchParams):Promise<any[]> {
+    // Use JsonpOptions' params and just add all new ones
+    params.appendAll(this.ro.search);
     return new Promise((resolve) => {
       this.jsonp.get(`${this.url}${endpoint}`, {
         search: params
@@ -42,8 +49,7 @@ export class SearchService {
   }
 
   private _getThing<T>(id:string, T):Promise<T>  {
-    let params = this.ro.search;
-    params.delete('term');
+    let params = new URLSearchParams();
     params.set('id', id);
     return this._makeCall('lookup', params)
       .then((results) => <T>T.fromJson(results[0]));

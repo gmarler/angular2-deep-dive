@@ -10,11 +10,17 @@ export class Track {
   previewUrl:string;
   collectionPrice:number;
   artist:Artist = null;
+  releaseDate:Date;
 
   static fromJson(obj):Track {
     let t = new Track();
     Object.assign(t, obj);
+    t.releaseDate = new Date(obj.releaseDate);
     return t;
+  }
+
+  update(track:Track) {
+    Object.assign(this, track);
   }
 
   get image():string {
