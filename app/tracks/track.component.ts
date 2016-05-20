@@ -1,4 +1,4 @@
-import {Component, Input, ElementRef, Injectable, Inject, provide, Output, EventEmitter} from '@angular/core';
+import {Directive, Component, Input, ElementRef, Injectable, Inject, provide, Output, EventEmitter} from '@angular/core';
 import {GRID} from '../styles/grid/grid12';
 import {COLORS} from '../styles/colors';
 import {BOOTSTRAP_CORE} from '../styles/bootstrap';
@@ -40,7 +40,7 @@ import {CoolAudio} from './cool-audio.component';
       <p class="artist" (click)="artistClicked.emit(track)" [innerText]="track.artistName"></p>
       <p class="album">
         <span [innerText]="track.collectionName"></span>
-        Released: 
+        Released: {{track.releaseDate | date}}
       </p>
     </div>
   </div>
