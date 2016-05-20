@@ -5,13 +5,19 @@ import {COUNTRIES} from '../../settings/settings.service';
   name: 'symbol'
 })
 export class CurrencySymbol implements PipeTransform {
-  transform(value:string):string {
+  transform(amount:string, currencyCode:string, before?:boolean):string {
     let symbol = '';
     for(let c in COUNTRIES) {
-      if(COUNTRIES[c].currency === value) {
+      if(COUNTRIES[c].currency === currencyCode) {
         symbol = COUNTRIES[c].currencySymbol;
       }
     }
-    return symbol || value;
+    symbol = symbol || currencyCode;
+    let template = '';
+    if(before) {
+      return `${symbol}${amount}`;
+    } else {
+      return `${amount}${symbol}`;
+    }
   }
 }

@@ -31,7 +31,7 @@ import {CurrencySymbol} from './currencysymbol.pipe';
         </div>
         <div class="col-xs-8">
           <p class="album">{{album.collectionName}}</p>
-          <p>Price: {{album.collectionPrice}}{{album.currency|symbol}}</p>
+          <p>Price: {{album.collectionPrice|symbol:album.currency:false}}</p>
         </div>
       </li>
     </ul>
