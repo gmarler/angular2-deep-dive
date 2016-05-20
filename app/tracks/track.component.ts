@@ -40,7 +40,7 @@ import {CoolAudio} from './cool-audio.component';
       <p class="artist" (click)="artistClicked.emit(track)" [innerText]="track.artistName"></p>
       <p class="album">
         <span [innerText]="track.collectionName"></span>
-        Released: {{track.releaseDate | date}}
+        Released: {{track.releaseDate | date:'shortDate'}}
       </p>
     </div>
   </div>
