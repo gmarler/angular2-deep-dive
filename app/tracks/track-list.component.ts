@@ -15,14 +15,19 @@ import {USE_JSONP} from '../config';
   template: `
   <track-row (track-clicked)="onTrackClicked($event)" (artist-clicked)="onArtistClicked($event)" *ngFor="let trackObj of tracks;" [track-model]="trackObj" [date-format]="dateFormat"></track-row>
   `,
-  directives: [TrackComponent, ROUTER_DIRECTIVES]
+  directives: [TrackComponent, ROUTER_DIRECTIVES],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TrackListComponent implements OnInit {
+export class TrackListComponent implements OnInit, AfterViewChecked {
   tracks:Track[];
   @Output('search-complete') searchComplete = new EventEmitter();
   @ViewChildren(TrackComponent) trackComponents:QueryList<TrackComponent>;
 
-  constructor(private searchService:SearchService, private router:Router) {
+  constructor(private searchService:SearchService, private router:Router, private cd:ChangeDetectorRef) {
+  }
+
+  ngAfterViewChecked() {
+    console.log('Checked list');
   }
 
   ngOnInit() {
@@ -33,6 +38,7 @@ export class TrackListComponent implements OnInit {
     return this.searchService.search(term).then((items) => {
       this.tracks = items;
       this.searchComplete.emit(term);
+      this.cd.markForCheck();
     });
   }
 
