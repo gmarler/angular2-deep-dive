@@ -1,4 +1,6 @@
-import {Directive, Component, Input, ElementRef, Injectable, Inject, provide, Output, EventEmitter} from '@angular/core';
+import {Directive, Component, Input, ElementRef, Injectable, Inject, provide, Output, EventEmitter,
+  AfterViewChecked
+} from '@angular/core';
 import {GRID} from '../styles/grid/grid12';
 import {COLORS} from '../styles/colors';
 import {BOOTSTRAP_CORE} from '../styles/bootstrap';
