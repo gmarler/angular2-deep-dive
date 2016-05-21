@@ -6,12 +6,32 @@ import {Router, RouteSegment, OnActivate, CanDeactivate, RouteTree} from '@angul
 import {Subject} from 'rxjs/Rx';
 import {AsyncPipe} from '@angular/common';
 
+@Pipe({
+  name: 'async'
+})
+class MyAsyncPipe extends AsyncPipe {
+  constructor(_ref: ChangeDetectorRef) {
+    console.log('Async pipe created');
+    super(_ref);
+  }
+  transform(obj: Subject<string[]>):any {
+    if(!this._subscription) {
+      console.log('subscribing once');
+      obj.subscribe((arr) => {
+        console.log('Check', arr);
+      });
+    }
+    return super.transform(obj);
+  }
+}
+
 @Component({
+  pipes: [MyAsyncPipe],
   template: `
     <div>
       Recent searches:
       <ul id="history">
-        <li *ngFor="let h of history" (click)="runTheSearch(h)">{{h}}</li>
+        <li *ngFor="let h of (history | async)" (click)="runTheSearch(h)">{{h}}</li>
       </ul>
     </div>
     <search-bar [(term)]="typedTerm" class="form-group" (execute-search)="runTheSearch($event)"></search-bar>
@@ -30,6 +50,10 @@ export class SearchPageComponent implements OnActivate {
   history:Subject<string[]>;
   @ViewChild(TrackListComponent) list:TrackListComponent;
   constructor(private historyService:HistoryService) {
+  }
+
+  ngOnInit() {
+    this.history = this.historyService.searchesO;
   }
 
   routerOnActivate(segment:RouteSegment) {
