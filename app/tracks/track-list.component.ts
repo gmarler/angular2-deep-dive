@@ -9,6 +9,33 @@ import {TrackComponent} from './track.component';
 import {Router, ROUTER_DIRECTIVES} from '@angular/router';
 import {USE_JSONP} from '../config';
 
+
+@Pipe({
+  name: 'filterType'
+})
+class FilterType implements PipeTransform {
+  transform(list:Track[], filter:string) {
+    console.log('OK');
+    if(filter==='all') {
+      return list;
+    }
+    return list.filter(item => item.kind === filter);
+  }
+}
+
+@Pipe({
+  name: 'badFilter'
+})
+class BadFilter implements PipeTransform {
+  transform(list:Track[], filters:any) {
+    console.log('BAD');
+    if(filters.type==='all') {
+      return list;
+    }
+    return list.filter(item => item.kind === filters.type);
+  }
+}
+
 @Component({
   selector: 'track-list',
   template: `
@@ -27,7 +54,7 @@ import {USE_JSONP} from '../config';
   `,
   directives: [TrackComponent, ROUTER_DIRECTIVES],
   providers: [],
-  pipes: []
+  pipes: [FilterType, BadFilter]
 })
 export class TrackListComponent implements OnInit {
   tracks:Track[];
