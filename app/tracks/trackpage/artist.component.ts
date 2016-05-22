@@ -35,8 +35,7 @@ import {CurrencySymbol} from './currencysymbol.pipe';
         </div>
       </li>
     </ul>
-  `,
-  pipes: [CurrencySymbol]
+  `
 })
 export class TrackArtistComponent {
   track = new Track();

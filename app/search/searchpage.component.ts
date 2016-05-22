@@ -19,7 +19,6 @@ export class AddPipe {
     {{4 | add:5:10:20:3}}
     <search-bar [(term)]="typedTerm" class="form-group" (execute-search)="runTheSearch($event)"></search-bar>
     <track-list></track-list>`,
-  pipes: [AddPipe],
   directives: [SearchBarComponent, TrackListComponent]
 })
 export class SearchPageComponent implements OnActivate {
