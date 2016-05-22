@@ -24,11 +24,12 @@ class FilterType implements PipeTransform {
 }
 
 @Pipe({
-  name: 'badFilter'
+  name: 'badFilter',
+  pure: false // If we don't set impure, the filter doesn't work
 })
 class BadFilter implements PipeTransform {
   transform(list:Track[], filters:any) {
-    console.log('BAD');
+    console.log('BAD'); // Because we set impure, this gets checked ALL THE TIME
     if(filters.type==='all') {
       return list;
     }
