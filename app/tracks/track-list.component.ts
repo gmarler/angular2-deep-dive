@@ -45,12 +45,10 @@ class BadFilter implements PipeTransform {
   <input type="radio" (click)="filterByType = 'all'; filters.type = 'all'" name="filterByType" checked="checked">All
   <input type="radio" (click)="filterByType = 'feature-movie'; filters.type = 'feature-movie'" name="filterByType">Movies
   <input type="radio" (click)="filterByType = 'song'; filters.type = 'song'" name="filterByType">Songs
+  <button (click)="markAllAsSongs()">Mark all as songs</button>
   </div>
-  <div class="col-xs-6">
+  <div>
     <track-row (track-clicked)="onTrackClicked($event)" (artist-clicked)="onArtistClicked($event)" *ngFor="let trackObj of (tracks | filterType:filterByType);" [track-model]="trackObj"></track-row>
-  </div>
-  <div class="col-xs-6">
-    <track-row (track-clicked)="onTrackClicked($event)" (artist-clicked)="onArtistClicked($event)" *ngFor="let trackObj of (tracks | badFilter:filters);" [track-model]="trackObj"></track-row>
   </div>
   `,
   directives: [TrackComponent, ROUTER_DIRECTIVES],
@@ -67,6 +65,13 @@ export class TrackListComponent implements OnInit {
   @ViewChildren(TrackComponent) trackComponents:QueryList<TrackComponent>;
 
   constructor(private searchService:SearchService, private router:Router) {
+  }
+
+  markAllAsSongs() {
+    this.tracks = this.tracks.map(item => {
+      item.kind = 'song';
+      return item;
+    });
   }
 
   ngOnInit() {
