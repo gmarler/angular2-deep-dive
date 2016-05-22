@@ -7,13 +7,12 @@ import {PLATFORM_DIRECTIVES, provide, PLATFORM_PIPES} from '@angular/core';
 import {ItunesAppComponent} from './app.component';
 import {AudioDirective} from './tracks/audio.directive';
 import {CurrencySymbol} from './tracks/trackpage/currencysymbol.pipe';
-import {AddPipe} from './search/searchpage.component';
 
 bootstrap(ItunesAppComponent, [provide(PLATFORM_DIRECTIVES, {
   useValue: AudioDirective,
   multi: true
 }), provide(PLATFORM_PIPES, {
-  useValue: [CurrencySymbol, AddPipe],
+  useValue: [CurrencySymbol],
   multi: true
 })])
   .then(function() {
