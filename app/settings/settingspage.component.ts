@@ -14,28 +14,29 @@ import {PrettyJsonPipe} from '../utils/prettyjson.pipe';
         <pre class="col-xs-5" [innerHtml]="theForm.value | json"></pre>
       </div>
       <div>Form is
-        <p [innerText]="false ? 'Pristine' : 'Dirty'"></p>
-        <p [innerText]="false ? 'Valid' : 'Invalid'"></p>
+        <p [innerText]="theForm.pristine ? 'Pristine' : 'Dirty'"></p>
+        <p [innerText]="theForm.valid ? 'Valid' : 'Invalid'"></p>
       </div>
       <div class="form-group" ngControlGroup="localisation">
         <label>Please pick the iTunes API country</label>
-        <select class="form-control">
+        <select class="form-control" ngControl="country">
           <option *ngFor="let country of countries" [ngValue]="country">{{country.name}}</option>
         </select>
         <label>Display currency symbol</label>
         <input name="displayCurrencySymbol" ngControl="displayCurrencySymbol" type="checkbox">
       </div>
-      <div class="form-group" ngControlGroup="details">
+      <div class="form-group" #detailsChunk="ngForm" [class.has-error]="!detailsChunk.valid" ngControlGroup="details">
         <label>First name</label>
-        <input class="form-control" ngControl="firstName" name="firstName" type="text">
+        <input class="form-control" (change)="i.control.updateValue((fn.value ? fn.value.charAt(0) : '') +(ln.value ? ln.value.charAt(0) : ''))" pattern="[A-Za-z]+" #fn="ngForm" ngControl="firstName" name="firstName" type="text">
+        <span class="help-block" *ngIf="fn.errors?.pattern">Pattern not matching: expected {{fn.errors?.pattern?.requiredPattern}}</span>
         <label>Last name</label>
-        <input class="form-control" ngControl="lastName" name="lastName" type="text">
+        <input class="form-control" (change)="i.control.updateValue((fn.value ? fn.value.charAt(0) : '') +(ln.value ? ln.value.charAt(0) : ''))" ngControl="lastName" #ln="ngForm" name="lastName" type="text">
         <label>Initials</label>
-        <input class="form-control" ngControl="initials" name="initials" type="text">
+        <input class="form-control" #i="ngForm" ngControl="initials" name="initials" type="text">
       </div>
       <div class="form-group">
         <label>Max number of items in history</label>
-        <input type="number">
+        <input type="number" required ngControl="historyMax">
       </div>
       <button class="btn btn-default">Save</button>
     </form>
