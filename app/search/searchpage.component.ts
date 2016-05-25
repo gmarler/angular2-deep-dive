@@ -6,27 +6,8 @@ import {Router, RouteSegment, OnActivate, CanDeactivate, RouteTree} from '@angul
 import {Subject} from 'rxjs/Rx';
 import {AsyncPipe} from '@angular/common';
 
-@Pipe({
-  name: 'async'
-})
-class MyAsyncPipe extends AsyncPipe {
-  constructor(_ref: ChangeDetectorRef) {
-    console.log('Async pipe created');
-    super(_ref);
-  }
-  transform(obj: Subject<string[]>):any {
-    if(!this._subscription) {
-      console.log('subscribing once');
-      obj.subscribe((arr) => {
-        console.log('Check', arr);
-      });
-    }
-    return super.transform(obj);
-  }
-}
 
 @Component({
-  pipes: [MyAsyncPipe],
   template: `
     <div>
       Recent searches:

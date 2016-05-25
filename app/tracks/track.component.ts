@@ -48,12 +48,9 @@ import {CoolAudio} from './cool-audio.component';
   </div>
   `
 })
-export class TrackComponent implements AfterViewChecked {
+export class TrackComponent {
   @Input('track-model') track: Track;
   @Input('date-format') dateFormat:string;
   @Output('track-clicked') trackClicked = new EventEmitter<Track>();
   @Output('artist-clicked') artistClicked = new EventEmitter<Track>();
-  ngAfterViewChecked() {
-    console.log('Track checked');
-  }
 }

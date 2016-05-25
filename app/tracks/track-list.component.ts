@@ -18,16 +18,12 @@ import {USE_JSONP} from '../config';
   directives: [TrackComponent, ROUTER_DIRECTIVES],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class TrackListComponent implements OnInit, AfterViewChecked {
+export class TrackListComponent implements OnInit {
   tracks:Track[];
   @Output('search-complete') searchComplete = new EventEmitter();
   @ViewChildren(TrackComponent) trackComponents:QueryList<TrackComponent>;
 
   constructor(private searchService:SearchService, private router:Router, private cd:ChangeDetectorRef) {
-  }
-
-  ngAfterViewChecked() {
-    console.log('Checked list');
   }
 
   ngOnInit() {

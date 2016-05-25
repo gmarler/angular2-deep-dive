@@ -29,6 +29,10 @@ footer {
   }
 }
 
+.container {
+  padding-bottom: 50px;
+}
+
 .navbar-nav > li > a {
   font-size: 20px;
   color: color(tertiary);
@@ -37,3 +41,10 @@ footer {
     color: color(secondary);
   }
 }
+
+pre {outline: 1px solid #ccc; padding: 5px; margin: 5px; }
+.string { color: green; }
+.number { color: darkorange; }
+.boolean { color: blue; }
+.null { color: magenta; }
+.key { color: red; }

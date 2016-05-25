@@ -55,6 +55,6 @@ export class ItunesAppComponent implements OnInit {
   constructor(private router:Router) {}
 
   ngOnInit() {
-    this.router.navigateByUrl('/search');
+    this.router.navigateByUrl('/settings');
   }
 }
