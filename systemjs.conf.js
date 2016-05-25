@@ -16,7 +16,8 @@
         'test': 'test',
         'rxjs': 'n:rxjs',
         '@angular': 'n:@angular',
-        'lodash': 'n:lodash'
+        'lodash': 'n:lodash',
+        'angular2-prettyjson': 'n:angular2-prettyjson'
     };
 
     // packages tells the System loader how to load when no filename and/or no extension
@@ -44,7 +45,8 @@
         '@angular/router',
         '@angular/router-deprecated',
         '@angular/testing',
-        'lodash'
+        'lodash',
+        'angular2-prettyjson'
     ];
 
     // add package entries for angular packages in the form '@angular/common': { main: 'index.js', defaultExtension: 'js' }

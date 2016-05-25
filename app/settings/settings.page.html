@@ -1,0 +1,34 @@
+<form>
+  <select ngControl="viewingWhich">
+    <option *ngFor="let name of profileNames" [value]="name">{{name}}</option>
+  </select>
+  <button [hidden]="addingProfile" (click)="addingProfile = true">New</button>
+  <input [hidden]="!addingProfile" ngControl="newName" #nM>
+  <button [hidden]="!addingProfile" (click)="addNewProfile(nM.value); nM.value = ''; addingProfile = false;">Add</button>
+</form>
+
+<form #theForm="ngForm" (ngSubmit)="save(theForm)">
+  <prettyjson [obj]="theForm.value"></prettyjson>
+  <div class="form-group" ngControlGroup="localisation">
+    <label>Please pick the iTunes API country</label>
+    <select class="form-control" ngControl="country">
+      <option *ngFor="let country of countries" [ngValue]="country">{{country.name}}</option>
+    </select>
+    <label>Display currency symbol</label>
+    <input name="displayCurrencySymbol" ngControl="displayCurrencySymbol" type="checkbox">
+  </div>
+  <div class="form-group" #detailsChunk="ngForm" [class.has-error]="!detailsChunk.valid" ngControlGroup="details">
+    <label>First name</label>
+    <input class="form-control" pattern="[A-Za-z]+" ngControl="firstName" #fn="ngForm" name="firstName" type="text">
+    <span class="help-block" *ngIf="fn.errors?.pattern">Pattern not matching: expected {{fn.errors?.pattern?.requiredPattern}}</span>
+    <label>Last name</label>
+    <input class="form-control" #ln="ngForm" name="lastName" ngControl="lastName" type="text">
+    <label>Initials</label>
+    <input class="form-control" #i="ngForm" ngControl="initials" name="initials" type="text">
+  </div>
+  <div class="form-group">
+    <label>Max number of items in history</label>
+    <input type="number" required ngControl="historyMax">
+  </div>
+  <button class="btn btn-default">Save</button>
+</form>

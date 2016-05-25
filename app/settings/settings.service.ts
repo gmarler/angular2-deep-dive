@@ -10,70 +10,62 @@ export class SettingsService {
 
   get profileNames() {
     return this.getProfiles()
-      .then(profiles => profiles.map(item => item.name));
+      .map(item => item.name);
   }
 
-  getProfile(name:string):Promise<ProfileModel> {
-    return this.getProfiles()
-      .then(profiles =>  {
-        let p = profiles.find(item => item.name === name);
-        if(!p) {
-          return Promise.reject<ProfileModel>(null);
-        }
-        return Promise.resolve(p);
-      });
+  getProfile(name:string):ProfileModel {
+    let p = this.getProfiles().find(item => item.name === name);
+    if(!p) {
+      throw `Unable to get profile with name ${name}`;
+    }
+    return p;
   }
 
-  get defaultProfile():Promise<ProfileModel> {
-    return this.getProfiles()
-      .then(profiles => profiles.find(item => item.name === this.defaultName));
+  get defaultProfile():ProfileModel {
+    let profiles = this.getProfiles();
+    return profiles.find(item => item.name === this.defaultName);
   }
 
-  setDefault(name:string):Promise<boolean> {
+  setDefault(name:string):boolean {
     window.localStorage.setItem(this.currentHolder, name);
-    return Promise.resolve(true);
+    return true;
   }
 
-  get currentProfile():Promise<ProfileModel> {
-    let currentProfileName = window.localStorage.getItem(this.currentHolder) || this.defaultName;
-    return this.getProfiles()
-      .then(profiles => {
-        let found = profiles.find(item => item.name === currentProfileName);
-        return found || this.defaultProfile;
-      });
+  get currentProfileName():string {
+    return window.localStorage.getItem(this.currentHolder) || this.defaultName;
   }
 
-  addNewProfile(name:string):Promise<boolean> {
-    return this.getProfiles()
-      .then(profiles => {
-        profiles.push(new ProfileModel(name));
-        return profiles;
-      })
-      .then(profiles => this.saveProfiles(profiles));
+  get currentProfile():ProfileModel {
+    let profiles = this.getProfiles();
+    let found = profiles.find(item => item.name === this.currentProfileName);
+    return found || this.defaultProfile;
   }
 
-  saveProfile(name:string, profile:ProfileModel):Promise<boolean> {
-    return this.getProfiles()
-      .then(profiles => {
-        // try to find corresponding profile
-        let p = profiles.find(item => item.name === name);
-        if(!p) {
-          // create
-          p = new ProfileModel(name);
-          profiles.push(p);
-        }
-        Object.assign(p, profile);
-        return this.saveProfiles(profiles);
-      });
+  addNewProfile(name:string):boolean {
+    let profiles = this.getProfiles();
+    profiles.push(new ProfileModel(name));
+    return this.saveProfiles(profiles);
   }
 
-  private saveProfiles(profiles:ProfileModel[]):Promise<boolean> {
+  saveProfile(name:string, profile:ProfileModel):boolean {
+    let profiles = this.getProfiles();
+    let p = profiles.find(item => item.name === name);
+    if(!p) {
+      // create
+      p = new ProfileModel(name);
+      profiles.push(p);
+    }
+    Object.assign(p, profile);
+    return this.saveProfiles(profiles);
+  }
+
+  private saveProfiles(profiles:ProfileModel[]):boolean {
     window.localStorage.setItem(this.holder, JSON.stringify(profiles));
     // Would have true/false on success
-    return Promise.resolve(true);
+    return true;
   }
 
-  private getProfiles() {
+  private getProfiles():ProfileModel[] {
     let profiles:ProfileModel[] = [];
     let serializedProfiles = window.localStorage.getItem(this.holder);
     if(serializedProfiles) {
@@ -81,6 +73,6 @@ export class SettingsService {
     } else {
       profiles = [new ProfileModel(this.defaultName)];
     }
-    return Promise.resolve(profiles);
+    return profiles;
   }
 }
