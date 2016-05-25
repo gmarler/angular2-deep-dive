@@ -8,10 +8,10 @@ import {PrettyJsonPipe} from '../utils/prettyjson.pipe';
 @Component({
   pipes: [PrettyJsonPipe],
   template: `
-    <form>
+    <form #theForm="ngForm">
       <div class="row">
         <pre class="col-xs-6" [innerHtml]="profile | async | json"></pre>
-        <pre class="col-xs-5" [innerHtml]="{} | json"></pre>
+        <pre class="col-xs-5" [innerHtml]="theForm.value | json"></pre>
       </div>
       <div>Form is
         <p [innerText]="false ? 'Pristine' : 'Dirty'"></p>
@@ -23,11 +23,11 @@ import {PrettyJsonPipe} from '../utils/prettyjson.pipe';
           <option *ngFor="let country of countries" [ngValue]="country">{{country.name}}</option>
         </select>
         <label>Display currency symbol</label>
-        <input name="displayCurrencySymbol" type="checkbox">
+        <input name="displayCurrencySymbol" ngControl="displayCurrencySymbol" type="checkbox">
       </div>
       <div class="form-group">
         <label>First name</label>
-        <input class="form-control" name="firstName" type="text">
+        <input class="form-control" ngControl="firstName" name="firstName" type="text">
         <label>Last name</label>
         <input class="form-control" name="lastName" type="text">
         <label>Initials</label>
