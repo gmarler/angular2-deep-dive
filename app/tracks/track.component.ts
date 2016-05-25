@@ -36,7 +36,7 @@ import {CoolAudio} from './cool-audio.component';
   template: `
   <div class="row">
     <div class="col-xs-3">
-      <img [src]="track.artworkUrl100" (click)="trackClicked.emit(track)">
+      <img [src]="track.artworkUrl100" (click)="ca.play()">
     </div>
     <div class="col-xs-8">
       <p class="track" (click)="trackClicked.emit(track)" [innerText]="track.trackName"></p>
@@ -44,6 +44,11 @@ import {CoolAudio} from './cool-audio.component';
       <p class="album">
         <span [innerText]="track.collectionName"></span>
         Released: {{track.releaseDate | date:dateFormat | uppercase}}
+      </p>
+      <p>
+        <cool-audio #ca="cool">
+          <source [src]="track.previewUrl">
+        </cool-audio>
       </p>
     </div>
   </div>

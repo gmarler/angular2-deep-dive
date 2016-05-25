@@ -6,6 +6,7 @@ import {BUTTONS} from '../styles/buttons';
   selector: 'cool-audio',
   directives: [],
   styles: [BUTTONS],
+  exportAs: 'cool',
   template: `
   <div>
     <button class="btn btn-info" (click)="play()">Play</button>
