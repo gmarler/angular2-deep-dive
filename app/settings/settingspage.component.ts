@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {FORM_PROVIDERS, FORM_DIRECTIVES, FormBuilder, ControlGroup, Control, Validators} from '@angular/common';
+import {FORM_PROVIDERS, FORM_DIRECTIVES, FormBuilder, ControlGroup, Control, Validators, NgForm} from '@angular/common';
 import {SettingsService} from './settings.service';
 import {Router, ROUTER_DIRECTIVES} from '@angular/router';
 import {ProfileModel, COUNTRIES, Country} from './profile.model';
@@ -17,7 +17,7 @@ import {PrettyJsonPipe} from '../utils/prettyjson.pipe';
         <p [innerText]="false ? 'Pristine' : 'Dirty'"></p>
         <p [innerText]="false ? 'Valid' : 'Invalid'"></p>
       </div>
-      <div class="form-group">
+      <div class="form-group" ngControlGroup="localisation">
         <label>Please pick the iTunes API country</label>
         <select class="form-control">
           <option *ngFor="let country of countries" [ngValue]="country">{{country.name}}</option>
@@ -25,13 +25,13 @@ import {PrettyJsonPipe} from '../utils/prettyjson.pipe';
         <label>Display currency symbol</label>
         <input name="displayCurrencySymbol" ngControl="displayCurrencySymbol" type="checkbox">
       </div>
-      <div class="form-group">
+      <div class="form-group" ngControlGroup="details">
         <label>First name</label>
         <input class="form-control" ngControl="firstName" name="firstName" type="text">
         <label>Last name</label>
-        <input class="form-control" name="lastName" type="text">
+        <input class="form-control" ngControl="lastName" name="lastName" type="text">
         <label>Initials</label>
-        <input class="form-control" name="initials" type="text">
+        <input class="form-control" ngControl="initials" name="initials" type="text">
       </div>
       <div class="form-group">
         <label>Max number of items in history</label>
