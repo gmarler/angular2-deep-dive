@@ -32,6 +32,7 @@ import {CoolAudio} from './cool-audio.component';
     }
     `
   ],
+  directives: [CoolAudio],
   template: `
   <div class="row">
     <div class="col-xs-3">

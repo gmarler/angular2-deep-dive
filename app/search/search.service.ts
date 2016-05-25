@@ -49,14 +49,18 @@ export class SearchService {
   private _makeCall(endpoint:string, params:URLSearchParams):Promise<any[]> {
     // Use JsonpOptions' params and just add all new ones
     params.appendAll(this.ro.search);
-    params.set('country', this.settingsService.country.code);
-    return new Promise((resolve) => {
-      this.jsonp.get(`${this.url}${endpoint}`, {
-        search: params
-      })
-      .map((response) => response.json().results)
-      .subscribe(resolve);
-    });
+    return this.settingsService.currentProfile
+      .then(profile => profile.localisation.country.code)
+      .then(countryCode => {
+        return new Promise(resolve => {
+          params.set('country', countryCode);
+          this.jsonp.get(`${this.url}${endpoint}`, {
+            search: params
+          })
+          .map(response => response.json().results)
+          .subscribe(resolve);
+        });
+      });
   }
 
   private _getThing<T>(id:string, T):Promise<T>  {

@@ -1,5 +1,5 @@
 import {Pipe, PipeTransform} from '@angular/core';
-import {COUNTRIES} from '../../settings/settings.service';
+import {COUNTRIES} from '../../settings/profile.model';
 
 @Pipe({
   name: 'symbol'
