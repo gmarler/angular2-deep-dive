@@ -30,6 +30,9 @@ export class SettingsPageComponent implements OnInit {
     this.countries = COUNTRIES;
     this.profile = this.settingsService.currentProfile;
     this.profileNames = this.settingsService.profileNames;
+
+    // Existing form control
+    this.viewingWhichControl = this.fb.control('default');
   }
 
   addNewProfile(name:string) {

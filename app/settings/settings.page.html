@@ -1,5 +1,5 @@
 <form>
-  <select ngControl="viewingWhich">
+  <select [ngFormControl]="viewingWhichControl">
     <option *ngFor="let name of profileNames" [value]="name">{{name}}</option>
   </select>
   <button [hidden]="addingProfile" (click)="addingProfile = true">New</button>
