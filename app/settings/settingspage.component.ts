@@ -33,6 +33,7 @@ export class SettingsPageComponent implements OnInit {
 
     // Existing form control
     this.viewingWhichControl = this.fb.control('default');
+    this.viewingWhichControl.valueChanges.subscribe(value => console.log(value));
   }
 
   addNewProfile(name:string) {
