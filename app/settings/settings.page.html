@@ -7,8 +7,8 @@
   <button [hidden]="!addingProfile" (click)="addNewProfile(nM.value); nM.value = ''; addingProfile = false;">Add</button>
 </form>
 
-<form #theForm="ngForm" (ngSubmit)="save(theForm)">
-  <prettyjson [obj]="theForm.value"></prettyjson>
+<form #theForm="ngForm" [ngFormModel]="profileForm" (ngSubmit)="save(theForm)">
+  <prettyjson [obj]="profileForm.value"></prettyjson>
   <div class="form-group" ngControlGroup="localisation">
     <label>Please pick the iTunes API country</label>
     <select class="form-control" ngControl="country">

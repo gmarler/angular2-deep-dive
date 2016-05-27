@@ -34,6 +34,20 @@ export class SettingsPageComponent implements OnInit {
     // Existing form control
     this.viewingWhichControl = this.fb.control('default');
     this.viewingWhichControl.valueChanges.subscribe(value => console.log(value));
+
+    // Create form model
+    this.profileForm = this.fb.group({
+      localisation: this.fb.group({
+        displayCurrencySymbol: [this.profile.localisation.displayCurrencySymbol],
+        country: [COUNTRIES.find(item => this.profile.localisation.country && item.code === this.profile.localisation.country.code) || '']
+      }),
+      details: this.fb.group({
+        firstName: [this.profile.details.firstName],
+        lastName: [this.profile.details.lastName],
+        initials: [this.profile.details.initials]
+      }),
+      historyMax: [this.profile.historyMax]
+    });
   }
 
   addNewProfile(name:string) {
