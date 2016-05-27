@@ -39,6 +39,14 @@ export class SettingsPageComponent implements OnInit {
       viewingWhichControl: this.viewingWhichControl,
       newName: this.newNameControl
     });
+    this.newNameControl.asyncValidator = (c:Control):Promise<{newname:string}> => {
+      return this.settingsService.profileNames.then(names => {
+        if(names.indexOf(c.value) !== -1) {
+          return {newname: 'Names clash'};
+        }
+        return null;
+      });
+    };
     // Trigger reload of profile on select list change
     this.viewingWhichControl.valueChanges.subscribe(name => this.loadProfile(name).then(profile => {
       this.profile = profile;
