@@ -48,6 +48,11 @@ export class SettingsPageComponent implements OnInit {
       }),
       historyMax: [this.profile.historyMax]
     });
+    this.detailsGroup = <ControlGroup>this.profileForm.find('details');
+    this.firstNameControl = this.profileForm.find(['details', 'firstName']) as Control;
+    this.lastNameControl = this.profileForm.find(['details', 'lastName']) as Control;
+    this.initialsControl = this.profileForm.find(['details', 'initials']) as Control;
+
   }
 
   addNewProfile(name:string) {
