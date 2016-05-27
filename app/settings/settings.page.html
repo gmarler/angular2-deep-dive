@@ -24,9 +24,10 @@
   <div class="form-group" #detailsChunk="ngForm" [class.has-error]="!detailsChunk.valid" ngControlGroup="details">
     <label>First name</label>
     <input class="form-control" #fn="ngForm" ngControl="firstName" [(ngModel)]="profile.details.firstName" name="firstName" type="text">
-    <span class="help-block" *ngIf="fn.errors?.pattern">Pattern not matching: expected {{fn.errors?.pattern?.requiredPattern}}</span>
+    <span class="help-block" *ngIf="firstNameControl.hasError('pattern')">Pattern not matching: expected {{firstNameControl.getError('pattern').requiredPattern}}</span>
     <label>Last name</label>
     <input class="form-control" [(ngModel)]="profile.details.lastName" name="lastName" ngControl="lastName" type="text">
+    <span class="help-block" *ngIf="lastNameControl.hasError('required')">This field is required</span>
     <label>Initials</label>
     <input class="form-control" [(ngModel)]="profile.details.initials" ngControl="initials" name="initials" type="text">
   </div>

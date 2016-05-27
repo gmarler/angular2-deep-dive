@@ -72,18 +72,15 @@ export class SettingsPageComponent implements OnInit {
       details: this.detailsGroup,
       historyMax: [5]
     });
-<<<<<<< HEAD
+
+    // Validation
+    this.lastNameControl.validator = Validators.required;
+    this.firstNameControl.validator = Validators.pattern('[A-Za-z0-9]*');
   }
 
   loadProfile(name:string):Promise<ProfileModel> {
     console.log(`Loading profile ${name}`);
     return this.settingsService.getProfile(name);
-=======
-    this.initialsControl = this.profileForm.find(['details', 'initials']) as Control;
-
-    // Validation
-    this.firstNameControl.validator = Validators.pattern('[A-Za-z0-9]*');
->>>>>>> 42b5146... Simple validation set programmatically
   }
 
   addNewProfile(name:string) {
