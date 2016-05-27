@@ -76,6 +76,10 @@ export class SettingsPageComponent implements OnInit {
     // Validation
     this.lastNameControl.validator = Validators.required;
     this.firstNameControl.validator = Validators.pattern('[A-Za-z0-9]*');
+    this.initialsControl = this.profileForm.find(['details', 'initials']) as Control;
+    this.initialsControl.validator = Validators.compose(
+      [Validators.minLength(2), Validators.pattern('[A-Z]*')]
+    );
   }
 
   loadProfile(name:string):Promise<ProfileModel> {
