@@ -52,6 +52,31 @@ export class SettingsPageComponent implements OnInit {
     this.firstNameControl = this.profileForm.find(['details', 'firstName']) as Control;
     this.lastNameControl = this.profileForm.find(['details', 'lastName']) as Control;
     this.initialsControl = this.profileForm.find(['details', 'initials']) as Control;
+    // First name stream:
+    // Joe ---- Joey -------- "" ---------------------------------------------- a - an - ant ---
+    // Last name stream
+    // Biden --------------------------------- "" - B - "" - D - Da ----------------
+    Observable.combineLatest(
+      this.firstNameControl.valueChanges
+      .map(v => v ? v[0].toUpperCase() : '')
+      // First name stream mapped
+      // J ---- J -------- "" ---------------------------------------------- A - A - A ---
+      .distinctUntilChanged()
+      // Distinct values
+      // J --------------- "" ---------------------------------------------- A -----------
+      , this.lastNameControl.valueChanges.map(v => v ? v[0].toUpperCase() : '')
+      // Last name stream mapped
+      // B ------------------------------------- "" - B - "" - D -------------------
+      .distinctUntilChanged()
+      // Distinct
+      // B ------------------------------------- "" - B - "" - D -------------------
+    )
+    // Combined latest
+    // [J,B] ----- ["", B] ---------------- ["", ""] - ["",B] - ["",""] - ["",D] ----------- [A,D]
+    .subscribe(([first, last]) => {
+      console.log(first, last);
+      this.initialsControl.updateValue(`${first}${last}`);
+    });
 
   }
 
