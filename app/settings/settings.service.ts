@@ -1,6 +1,9 @@
 import {Injectable} from '@angular/core';
 import {ProfileModel} from './profile.model';
 
+function delay(t:number) {
+  return new Promise(resolve => setTimeout(resolve, t));
+}
 
 @Injectable()
 export class SettingsService {
@@ -8,64 +11,71 @@ export class SettingsService {
   private currentHolder = 'ITUNES_BROWSER_CURRENT_PROFILE';
   private defaultName = 'default';
 
-  get profileNames() {
+  get profileNames():Promise<string[]> {
     return this.getProfiles()
-      .map(item => item.name);
+      .then(profiles => profiles.map(item => item.name));
   }
 
-  getProfile(name:string):ProfileModel {
-    let p = this.getProfiles().find(item => item.name === name);
-    if(!p) {
-      throw `Unable to get profile with name ${name}`;
-    }
-    return p;
+  getProfile(name:string):Promise<ProfileModel> {
+    return this.getProfiles()
+      .then(profiles =>  {
+        let p = profiles.find(item => item.name === name);
+        if(!p) {
+          return Promise.reject<ProfileModel>(null);
+        }
+        return Promise.resolve(p);
+      });
   }
 
-  get defaultProfile():ProfileModel {
-    let profiles = this.getProfiles();
-    return profiles.find(item => item.name === this.defaultName);
+  get defaultProfile():Promise<ProfileModel> {
+    return this.getProfiles()
+      .then(profiles => profiles.find(item => item.name === this.defaultName));
   }
 
-  setDefault(name:string):boolean {
+  get currentName():Promise<string> {
+    return Promise.resolve(window.localStorage.getItem(this.currentHolder) || this.defaultName);
+  }
+
+  setDefault(name:string):Promise<boolean> {
     window.localStorage.setItem(this.currentHolder, name);
-    return true;
+    return Promise.resolve(true);
   }
 
-  get currentProfileName():string {
-    return window.localStorage.getItem(this.currentHolder) || this.defaultName;
+  get currentProfile():Promise<ProfileModel> {
+    return this.currentName.then(name => this.getProfile(name));
   }
 
-  get currentProfile():ProfileModel {
-    let profiles = this.getProfiles();
-    let found = profiles.find(item => item.name === this.currentProfileName);
-    return found || this.defaultProfile;
+  addNewProfile(name:string):Promise<boolean> {
+    return this.getProfiles()
+      .then(profiles => {
+        profiles.push(new ProfileModel(name));
+        return profiles;
+      })
+      .then(profiles => this.saveProfiles(profiles));
   }
 
-  addNewProfile(name:string):boolean {
-    let profiles = this.getProfiles();
-    profiles.push(new ProfileModel(name));
-    return this.saveProfiles(profiles);
+  saveProfile(name:string, profile:ProfileModel):Promise<boolean> {
+    return this.getProfiles()
+      .then(profiles => {
+        // try to find corresponding profile
+        let p = profiles.find(item => item.name === name);
+        if(!p) {
+          // create
+          p = new ProfileModel(name);
+          profiles.push(p);
+        }
+        Object.assign(p, profile);
+        return this.saveProfiles(profiles);
+      });
   }
 
-  saveProfile(name:string, profile:ProfileModel):boolean {
-    let profiles = this.getProfiles();
-    let p = profiles.find(item => item.name === name);
-    if(!p) {
-      // create
-      p = new ProfileModel(name);
-      profiles.push(p);
-    }
-    Object.assign(p, profile);
-    return this.saveProfiles(profiles);
-  }
-
-  private saveProfiles(profiles:ProfileModel[]):boolean {
+  private saveProfiles(profiles:ProfileModel[]):Promise<boolean> {
     window.localStorage.setItem(this.holder, JSON.stringify(profiles));
     // Would have true/false on success
-    return true;
+    return Promise.resolve(true);
   }
 
-  private getProfiles():ProfileModel[] {
+  private getProfiles():Promise<ProfileModel[]> {
     let profiles:ProfileModel[] = [];
     let serializedProfiles = window.localStorage.getItem(this.holder);
     if(serializedProfiles) {
@@ -73,6 +83,6 @@ export class SettingsService {
     } else {
       profiles = [new ProfileModel(this.defaultName)];
     }
-    return profiles;
+    return Promise.resolve(profiles);
   }
 }

@@ -1,34 +1,38 @@
-<form>
+<form [ngFormModel]="profilesListForm">
   <select [ngFormControl]="viewingWhichControl">
-    <option *ngFor="let name of profileNames" [value]="name">{{name}}</option>
+    <option *ngFor="let name of (profileNames | async)" [value]="name">{{name}}</option>
   </select>
-  <button [hidden]="addingProfile" (click)="addingProfile = true">New</button>
+  <button class="btn" [hidden]="addingProfile" (click)="addingProfile = true">New</button>
+  <button class="btn" [hidden]="addingProfile" (click)="setDefault()">Set as default</button>
   <input [hidden]="!addingProfile" ngControl="newName" #nM>
+  <br>Valid: {{newNameControl.valid}}
+  <br>Pending: {{newNameControl.pending}}
+  <br>{{newNameControl.getError('newname')}}<br>
   <button [hidden]="!addingProfile" (click)="addNewProfile(nM.value); nM.value = ''; addingProfile = false;">Add</button>
 </form>
 
 <form #theForm="ngForm" [ngFormModel]="profileForm" (ngSubmit)="save(theForm)">
-  <prettyjson [obj]="profileForm.value"></prettyjson>
   <div class="form-group" ngControlGroup="localisation">
     <label>Please pick the iTunes API country</label>
-    <select class="form-control" ngControl="country">
+    <select #cc="ngForm" class="form-control" ngControl="country">
+      <option [ngValue]="{name: 'Australia', code: 'AU'}">Australia</option>
       <option *ngFor="let country of countries" [ngValue]="country">{{country.name}}</option>
     </select>
     <label>Display currency symbol</label>
-    <input name="displayCurrencySymbol" ngControl="displayCurrencySymbol" type="checkbox">
+    <input name="displayCurrencySymbol" [(ngModel)]="profile.localisation.displayCurrencySymbol" ngControl="displayCurrencySymbol" type="checkbox">
   </div>
   <div class="form-group" #detailsChunk="ngForm" [class.has-error]="!detailsChunk.valid" ngControlGroup="details">
     <label>First name</label>
-    <input class="form-control" pattern="[A-Za-z]+" ngControl="firstName" #fn="ngForm" name="firstName" type="text">
+    <input class="form-control" #fn="ngForm" ngControl="firstName" [(ngModel)]="profile.details.firstName" name="firstName" type="text">
     <span class="help-block" *ngIf="fn.errors?.pattern">Pattern not matching: expected {{fn.errors?.pattern?.requiredPattern}}</span>
     <label>Last name</label>
-    <input class="form-control" #ln="ngForm" name="lastName" ngControl="lastName" type="text">
+    <input class="form-control" [(ngModel)]="profile.details.lastName" name="lastName" ngControl="lastName" type="text">
     <label>Initials</label>
-    <input class="form-control" #i="ngForm" ngControl="initials" name="initials" type="text">
+    <input class="form-control" [(ngModel)]="profile.details.initials" ngControl="initials" name="initials" type="text">
   </div>
   <div class="form-group">
     <label>Max number of items in history</label>
-    <input type="number" required ngControl="historyMax" [(ngModel)]="profile.historyMax">
+    <input type="number" ngControl="historyMax" [(ngModel)]="profile.historyMax">
   </div>
   <button class="btn btn-default">Save</button>
 </form>

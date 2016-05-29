@@ -15,76 +15,87 @@ import {Subscription, Observable} from 'rxjs/Rx';
 export class SettingsPageComponent implements OnInit {
   country:string;
   countries:Country[] = [];
-  profile:ProfileModel;
-  profileNames:string[];
+  profile = new ProfileModel('temp');
+  profileNames:Promise<string[]>;
   profileForm:ControlGroup;
+  profilesListForm:ControlGroup;
   detailsGroup:ControlGroup;
   firstNameControl:Control;
   lastNameControl:Control;
   initialsControl:Control;
   viewingWhichControl:Control;
+  newNameControl:Control;
   initialsCompiler:Subscription;
   constructor(private fb:FormBuilder, private settingsService:SettingsService, private router:Router) {}
 
   ngOnInit() {
     this.countries = COUNTRIES;
-    this.profile = this.settingsService.currentProfile;
     this.profileNames = this.settingsService.profileNames;
 
     // Existing form control
-    this.viewingWhichControl = this.fb.control('default');
-    this.viewingWhichControl.valueChanges.subscribe(value => console.log(value));
+    this.viewingWhichControl = this.fb.control('');
+    this.newNameControl = this.fb.control('');
+    this.profilesListForm = this.fb.group({
+      viewingWhichControl: this.viewingWhichControl,
+      newName: this.newNameControl
+    });
+    // Trigger reload of profile on select list change
+    this.viewingWhichControl.valueChanges.subscribe(name => this.loadProfile(name).then(profile => {
+      this.profile = profile;
+      // Some controls can't use ngModel e.g. here because the country control needs its value to be a particular country object, not an object with same values. It compares by reference. So we find the corresponding Country inside COUNTRIES and then update value
+      (this.profileForm
+        .find(['localisation', 'country']) as Control)
+        .updateValue(COUNTRIES.find(item => item.code === profile.localisation.country.code));
+    }));
+    // This will trigger the above, the first time and thus load the profile
+    this.settingsService.currentName.then(name => this.viewingWhichControl.updateValue(name));
+
+    // Here you can see various programmatical ways of building the control groups/controls
+    // We can...
+    // Create some controls first
+    this.firstNameControl = new Control('');
+    this.lastNameControl = this.fb.control('');
+    // Create a group without all its controls
+    this.detailsGroup = this.fb.group({
+      initials: ['']
+    });
+    // Add the controls programmatically
+    this.detailsGroup.addControl('firstName', this.firstNameControl);
+    this.detailsGroup.addControl('lastName', this.lastNameControl);
 
     // Create form model
     this.profileForm = this.fb.group({
       localisation: this.fb.group({
-        displayCurrencySymbol: [this.profile.localisation.displayCurrencySymbol],
-        country: [COUNTRIES.find(item => this.profile.localisation.country && item.code === this.profile.localisation.country.code) || '']
+        displayCurrencySymbol: [false],
+        country: [COUNTRIES[0]]
       }),
-      details: this.fb.group({
-        firstName: [this.profile.details.firstName],
-        lastName: [this.profile.details.lastName],
-        initials: [this.profile.details.initials]
-      }),
-      historyMax: [this.profile.historyMax]
+      details: this.detailsGroup,
+      historyMax: [5]
     });
-    this.detailsGroup = <ControlGroup>this.profileForm.find('details');
-    this.firstNameControl = this.profileForm.find(['details', 'firstName']) as Control;
-    this.lastNameControl = this.profileForm.find(['details', 'lastName']) as Control;
-    this.initialsControl = this.profileForm.find(['details', 'initials']) as Control;
-    // First name stream:
-    // Joe ---- Joey -------- "" ---------------------------------------------- a - an - ant ---
-    // Last name stream
-    // Biden --------------------------------- "" - B - "" - D - Da ----------------
-    Observable.combineLatest(
-      this.firstNameControl.valueChanges
-      .map(v => v ? v[0].toUpperCase() : '')
-      // First name stream mapped
-      // J ---- J -------- "" ---------------------------------------------- A - A - A ---
-      .distinctUntilChanged()
-      // Distinct values
-      // J --------------- "" ---------------------------------------------- A -----------
-      , this.lastNameControl.valueChanges.map(v => v ? v[0].toUpperCase() : '')
-      // Last name stream mapped
-      // B ------------------------------------- "" - B - "" - D -------------------
-      .distinctUntilChanged()
-      // Distinct
-      // B ------------------------------------- "" - B - "" - D -------------------
-    )
-    // Combined latest
-    // [J,B] ----- ["", B] ---------------- ["", ""] - ["",B] - ["",""] - ["",D] ----------- [A,D]
-    .subscribe(([first, last]) => {
-      console.log(first, last);
-      this.initialsControl.updateValue(`${first}${last}`);
-    });
+<<<<<<< HEAD
+  }
 
+  loadProfile(name:string):Promise<ProfileModel> {
+    console.log(`Loading profile ${name}`);
+    return this.settingsService.getProfile(name);
+=======
+    this.initialsControl = this.profileForm.find(['details', 'initials']) as Control;
+
+    // Validation
+    this.firstNameControl.validator = Validators.pattern('[A-Za-z0-9]*');
+>>>>>>> 42b5146... Simple validation set programmatically
   }
 
   addNewProfile(name:string) {
     this.settingsService.addNewProfile(name);
   }
 
+  setDefault() {
+    this.settingsService.setDefault(this.viewingWhichControl.value);
+  }
+
   save() {
-    // Implement this...
+    this.settingsService.saveProfile(this.profile.name, this.profileForm.value);
+    window.alert('Saved');
   }
 }
