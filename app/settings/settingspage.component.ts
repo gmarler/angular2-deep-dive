@@ -80,6 +80,13 @@ export class SettingsPageComponent implements OnInit {
     this.initialsControl.validator = Validators.compose(
       [Validators.minLength(2), Validators.pattern('[A-Z]*')]
     );
+    this.profileForm.find(['localisation', 'country']).validator = (countryControl: Control) => {
+      let validCountry = COUNTRIES.find(item => item.code === countryControl.value.code);
+      if(validCountry) {
+        return null;
+      }
+      return {problem: 'Country isnt part of valid ones'};
+    };
   }
 
   loadProfile(name:string):Promise<ProfileModel> {

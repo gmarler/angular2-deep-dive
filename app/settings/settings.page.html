@@ -18,6 +18,7 @@
       <option [ngValue]="{name: 'Australia', code: 'AU'}">Australia</option>
       <option *ngFor="let country of countries" [ngValue]="country">{{country.name}}</option>
     </select>
+    <p *ngIf="cc.control.hasError('problem')">{{cc.control.getError('problem')}}</p>
     <label>Display currency symbol</label>
     <input name="displayCurrencySymbol" [(ngModel)]="profile.localisation.displayCurrencySymbol" ngControl="displayCurrencySymbol" type="checkbox">
   </div>
