@@ -5,16 +5,11 @@ import {
   describe,
   expect,
   beforeEachProviders,
-  beforeEach,
 } from '@angular/core/testing';
-import {
-  provide
-} from '@angular/core';
-import {
-  MockBackend
-} from '@angular/http/testing';
+import {provide} from '@angular/core';
+import {MockBackend, MockConnection} from '@angular/http/testing';
 import {JSONPBackend, JSONP_PROVIDERS, Response, ResponseOptions, RequestOptions} from '@angular/http';
-import { SearchService } from './search.service';
+import {SearchService, API_URL} from './search.service';
 import {JsonpOptions} from '../jsonp/jsonp.options';
 
 describe('SearchService Tests', () => {
@@ -28,6 +23,6 @@ describe('SearchService Tests', () => {
     }));
   });
 
-  it('Should read the data from the results array of response data', injectAsync([JSONPBackend, SearchService], (backend:MockBackend, searchService:SearchService) => {
+  it('Should read the data from the results array of response data', inject([JSONPBackend, SearchService], (backend:MockBackend, searchService:SearchService) => {
   }));
 });
