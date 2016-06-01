@@ -24,7 +24,13 @@ describe('SearchService Tests', () => {
   });
 
   describe('With settings', () => {
+    beforeEachProviders(() => [
+      provide('CONFIGURABLE_API_URL', {
+        useValue: 'something'
+      })
+    ]);
     it('Should have the new  URL value if provided', inject([SearchService], (searchService:SearchService) => {
+      expect(searchService.url).toEqual('something');
     }));
   });
 
