@@ -13,8 +13,13 @@ import {SearchService, API_URL} from './search.service';
 import {JsonpOptions} from '../jsonp/jsonp.options';
 
 describe('SearchService Tests', () => {
+  beforeEachProviders(() => [
+    JSONP_PROVIDERS,
+    SearchService
+  ]);
   describe('Without settings', () => {
     it('Should have the default URL value if not provided', inject([SearchService], (searchService:SearchService) => {
+      expect(searchService.url).toEqual(API_URL);
     }));
   });
 
