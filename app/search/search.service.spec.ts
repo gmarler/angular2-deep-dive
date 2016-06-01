@@ -15,6 +15,9 @@ import {JsonpOptions} from '../jsonp/jsonp.options';
 describe('SearchService Tests', () => {
   beforeEachProviders(() => [
     JSONP_PROVIDERS,
+    provide(JSONPBackend, {
+      useClass: MockBackend
+    }),
     SearchService
   ]);
   describe('Without settings', () => {
@@ -34,6 +37,17 @@ describe('SearchService Tests', () => {
     }));
   });
 
-  it('Should read the data from the results array of response data', inject([JSONPBackend, SearchService], (backend:MockBackend, searchService:SearchService) => {
+  it('Should read the data from the results array of response data', injectAsync([JSONPBackend, SearchService], (backend:MockBackend, searchService:SearchService) => {
+    backend.connections.subscribe((c:MockConnection) => {
+      c.mockRespond(new Response(new ResponseOptions({
+        body: {
+          results: [{}, {}]
+        },
+        status: 200
+      })));
+    });
+    searchService.search('some term').then(items => {
+      expect(items.length).toEqual(2);
+    });
   }));
 });
