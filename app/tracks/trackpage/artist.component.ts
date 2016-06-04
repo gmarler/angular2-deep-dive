@@ -20,9 +20,11 @@ import {CurrencySymbol} from './currencysymbol.pipe';
       font-size: 15px;
     }`
   ],
-  template: `Artist details for <b>{{track.trackName}}</b>:
-    <p class="name">{{track.artist?.artistName}}</p>
-    <p>Main genre: {{track.artist?.primaryGenreName}}</p>
+  template: `
+  <div *ngIf="track">
+  Artist details for <b>{{track.trackName}}</b>:
+    <p class="name">{{track.artist.artistName}}</p>
+    <p>Main genre: {{track.artist.primaryGenreName}}</p>
     <h4>Albums</h4>
     <ul>
       <li *ngFor="let album of track.artist?.albums">
@@ -35,23 +37,15 @@ import {CurrencySymbol} from './currencysymbol.pipe';
         </div>
       </li>
     </ul>
+  </div>
   `
 })
 export class TrackArtistComponent {
-  track = new Track();
-  constructor(private settingsService:SettingsService, private trackHolder:TrackHolder, private searchService:SearchService) {
+  track:Track;
+  constructor(private trackHolder:TrackHolder) {
   }
 
   ngOnInit() {
-    this.trackHolder.track
-      .then(track => this.track = track)
-      .then(() => {
-        return this.searchService.getArtist(this.track.artistId)
-          .then(artist => this.track.artist = artist);
-      })
-      .then(() => {
-        this.searchService.loadAlbums(this.track.artistId)
-          .then(albums => this.track.artist.albums = albums);
-      });
+    this.trackHolder.track.then(track => this.track = track);
   }
 }

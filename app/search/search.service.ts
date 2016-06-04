@@ -6,6 +6,11 @@ import 'rxjs/add/operator/map';
 
 export const API_URL = 'https://itunes.apple.com/';
 
+function failAfter(seconds:number) {
+  return new Promise((_, reject) => {
+    setTimeout(reject, seconds * 1000);
+  });
+}
 
 @Injectable()
 export class SearchService {
@@ -41,6 +46,7 @@ export class SearchService {
     return this._makeCall('search', params)
       .then((results) => results.map((item) => Track.fromJson(item)))
       .then(tracks => {
+        console.log(`Done from ${this.url}`);
         this.tracks = tracks;
         return tracks;
       });

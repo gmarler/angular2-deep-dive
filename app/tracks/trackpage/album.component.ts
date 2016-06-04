@@ -4,10 +4,14 @@ import {Track} from '../track.model';
 
 @Component({
   selector: 'track-album',
-  template: `Album details for song {{track.trackName}}`
+  template: `
+  <div *ngIf="track">
+  <h3>Album details for song {{track.trackName}}</h3>
+  </div>
+  `
 })
 export class TrackAlbumComponent {
-  track = new Track();
+  track:Track;
   constructor(private trackHolder:TrackHolder) {
   }
 

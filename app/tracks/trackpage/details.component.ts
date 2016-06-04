@@ -4,10 +4,22 @@ import {Track} from '../track.model';
 
 @Component({
   selector: 'track-details',
-  template: `Details for song <b>{{track.trackName}}</b>`
+  styles: [`.img {
+    text-align: center;
+  }
+  img {
+    width: 200px;
+  }`],
+  template: `
+    <div *ngIf="track">
+    <h3>Details for song <b>{{track.trackName}}</b></h3>
+    <p class="img"><img [src]="track.artworkUrl100"></p>
+    <p>Album: {{track.collectionName}}</p>
+    </div>
+    `
 })
 export class TrackDetailsComponent {
-  track = new Track();
+  track:Track;
   constructor(private trackHolder:TrackHolder) {
   }
 

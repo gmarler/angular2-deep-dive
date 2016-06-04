@@ -5,9 +5,6 @@
   <button class="btn" [hidden]="addingProfile" (click)="addingProfile = true">New</button>
   <button class="btn" [hidden]="addingProfile" (click)="setDefault()">Set as default</button>
   <input [hidden]="!addingProfile" ngControl="newName" #nM>
-  <br>Valid: {{newNameControl.valid}}
-  <br>Pending: {{newNameControl.pending}}
-  <br>{{newNameControl.getError('newname')}}<br>
   <button [hidden]="!addingProfile" (click)="addNewProfile(nM.value); nM.value = ''; addingProfile = false;">Add</button>
 </form>
 

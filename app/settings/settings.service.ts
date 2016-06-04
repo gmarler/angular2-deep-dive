@@ -12,8 +12,8 @@ export class SettingsService {
   private defaultName = 'default';
 
   get profileNames():Promise<string[]> {
-    return delay(3000).then(_ => this.getProfiles()
-      .then(profiles => profiles.map(item => item.name)));
+    return this.getProfiles()
+      .then(profiles => profiles.map(item => item.name));
   }
 
   getProfile(name:string):Promise<ProfileModel> {

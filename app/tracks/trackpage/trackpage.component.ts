@@ -13,7 +13,6 @@ import {TrackArtistComponent} from './artist.component';
       <a routerLink="./details">Details</a>
       <a routerLink="./artist">Artist</a>
       <a routerLink="./album">Album</a>
-      <a routerLink="/search">Back to search</a>
     </div>
     <div>
       <router-outlet></router-outlet>

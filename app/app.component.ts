@@ -6,6 +6,7 @@ import {SettingsService} from './settings/settings.service';
 import {SearchPageComponent} from './search/searchpage.component';
 import {SettingsPageComponent} from './settings/settingspage.component';
 import {HistoryPageComponent} from './search/historypage.component';
+import {InMemoryCache} from './search/cache/inmemory';
 import {JsonpOptions} from './jsonp/jsonp.options';
 import {TrackPageComponent} from './tracks/trackpage/trackpage.component';
 import {JSONP_PROVIDERS, URLSearchParams, RequestOptions, BaseRequestOptions} from '@angular/http';
@@ -20,6 +21,7 @@ import {ROUTER_PROVIDERS, ROUTER_DIRECTIVES, Routes, Router} from '@angular/rout
     SearchService,
     SettingsService,
     HistoryService,
+    InMemoryCache,
     provide(RequestOptions, {
       useClass: JsonpOptions
     })
@@ -55,6 +57,6 @@ export class ItunesAppComponent implements OnInit {
   constructor(private router:Router) {}
 
   ngOnInit() {
-    this.router.navigateByUrl('/settings');
+    this.router.navigateByUrl('/search');
   }
 }
