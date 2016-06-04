@@ -16,14 +16,23 @@ import {USE_JSONP} from '../config';
   <track-row (track-clicked)="onTrackClicked($event)" (artist-clicked)="onArtistClicked($event)" *ngFor="let trackObj of tracks;" [track-model]="trackObj" [date-format]="dateFormat"></track-row>
   `,
   directives: [TrackComponent, ROUTER_DIRECTIVES],
-  changeDetection: ChangeDetectionStrategy.OnPush
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    provide('DirectSearchService', {
+      useExisting: SearchService
+    }),
+    provide('CONFIGURABLE_API_URL', {useValue: 'http://redapesolutions.com/itunes/'}),
+    provide('ProxiedSearchService', {
+      useClass: SearchService
+    })
+  ]
 })
 export class TrackListComponent implements OnInit {
   tracks:Track[];
   @Output('search-complete') searchComplete = new EventEmitter();
   @ViewChildren(TrackComponent) trackComponents:QueryList<TrackComponent>;
 
-  constructor(private searchService:SearchService, private router:Router, private cd:ChangeDetectorRef) {
+  constructor(@Inject('DirectSearchService') private searchService:SearchService, @Inject('ProxiedSearchService') private proxiedService:SearchService, private router:Router, private cd:ChangeDetectorRef) {
   }
 
   ngOnInit() {
@@ -31,7 +40,11 @@ export class TrackListComponent implements OnInit {
   }
 
   search(term:string):Promise<void> {
-    return this.searchService.search(term).then((items) => {
+    return Promise.race([
+      this.searchService.search(term),
+      this.proxiedService.search(term)
+    ]).then((items) => {
+      console.log('One is done');
       this.tracks = items;
       this.searchComplete.emit(term);
       this.cd.markForCheck();
