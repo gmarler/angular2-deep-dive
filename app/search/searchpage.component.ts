@@ -5,17 +5,12 @@ import {TrackListComponent} from '../tracks/track-list.component';
 import {Router, RouteSegment, OnActivate, CanDeactivate, RouteTree} from '@angular/router';
 import {Subject} from 'rxjs/Rx';
 import {AsyncPipe} from '@angular/common';
+import {Track} from '../tracks/track.model';
 
 
 @Component({
   template: `
-    <div>
-      Recent searches:
-      <ul id="history">
-        <li *ngFor="let h of (history | async)" (click)="runTheSearch(h)">{{h}}</li>
-      </ul>
-    </div>
-    <search-bar [(term)]="typedTerm" class="form-group" (execute-search)="runTheSearch($event)"></search-bar>
+    <search-bar [(term)]="typedTerm" class="form-group" (search-complete)="displayTracks($event)"></search-bar>
     <track-list></track-list>
     `,
   styles: [
@@ -45,8 +40,7 @@ export class SearchPageComponent implements OnActivate {
     this.typedTerm = '';
   }
 
-  runTheSearch(term:string) {
-    this.historyService.add(term);
-    this.list.search(term).then(() => this.clearTerm());
+  displayTracks(tracks: Track[]) {
+    this.list.displayTracks(tracks);
   }
 }

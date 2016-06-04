@@ -6,9 +6,9 @@ import 'rxjs/add/operator/map';
 
 export const API_URL = 'https://itunes.apple.com/';
 
-function failAfter(seconds:number) {
-  return new Promise((_, reject) => {
-    setTimeout(reject, seconds * 1000);
+function delay(seconds:number) {
+  return new Promise(resolve => {
+    setTimeout(resolve, seconds * 1000);
   });
 }
 
@@ -43,13 +43,13 @@ export class SearchService {
   search(term:string):Promise<Track[]> {
     let params = new URLSearchParams();
     params.set('term', term);
-    return this._makeCall('search', params)
+    return delay(5).then(() => this._makeCall('search', params)
       .then((results) => results.map((item) => Track.fromJson(item)))
       .then(tracks => {
         console.log(`Done from ${this.url}`);
         this.tracks = tracks;
         return tracks;
-      });
+      }));
   }
 
   private _makeCall(endpoint:string, params:URLSearchParams):Promise<any[]> {
