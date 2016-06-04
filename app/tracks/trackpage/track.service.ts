@@ -16,15 +16,20 @@ export class TrackHolder {
       return this.searchService.getSong(this.id)
         // Load track
         .then(track => this._track = track)
-        // Then get artist detais
-        .then(track => this.searchService.getArtist(track.trackId))
-        // Then set artist on track
-        .then(artist => this._track.artist = artist)
-        // Then load albums for artist
-        .then(_ => this.searchService.loadAlbums(this._track.artist.artistId))
-        // Then set the albums on the artist
-        .then(albums => this._track.artist.albums = albums)
-        // Then resolve with the (fully loaded) track model
+        // Then get both artist and albums at the same time
+        .then(track => {
+          // Issues with Promise.all typing are known https://github.com/Microsoft/TypeScript/issues/5935
+          return Promise.all<Artist | Album[]>([
+            this.searchService.getArtist(track.trackId),
+            this.searchService.loadAlbums(track.artistId)
+          ]);
+        })
+        // Then set artist on track and albums on artist
+        // Until Promise.all typing is fixed, we have to explicitely assert artist and album array
+        .then(([artist, albums]: [Artist, Album[]]) => {
+          this._track.artist = artist;
+          artist.albums = albums;
+        })
         .then(_ => this._track);
     }
     return Promise.resolve(this._track);
