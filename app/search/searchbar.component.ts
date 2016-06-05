@@ -33,6 +33,7 @@ export class SearchBarComponent implements AfterViewInit {
   }
 
   ngAfterViewInit() {
-
+    let clicks = Observable.fromEvent<MouseEvent>(this.searchButton.nativeElement, 'click');
+    let strokes = Observable.fromEvent<KeyboardEvent>(this.searchInput.nativeElement, 'keyup');
   }
 }
