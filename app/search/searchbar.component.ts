@@ -41,5 +41,6 @@ export class SearchBarComponent implements AfterViewInit {
     let clicksString = clicks.map(event => this.searchInput.nativeElement.value as string);
     let enterStrokesString = enterStrokes.map(event => this.searchInput.nativeElement.value as string);
     let letterStrokesString = letterStrokes.map(event => this.searchInput.nativeElement.value as string);
+    let searchRequests = Observable.merge(clicksString, enterStrokesString, letterStrokesString)
   }
 }
