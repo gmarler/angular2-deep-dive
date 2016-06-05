@@ -44,5 +44,6 @@ export class SearchBarComponent implements AfterViewInit {
     let searchRequests = Observable.merge(clicksString, enterStrokesString, letterStrokesString)
       .distinctUntilChanged()
       .switchMap(searchValue => this.searchService.search(searchValue));
+    searchRequests.subscribe(tracks => this.complete.emit(tracks));
   }
 }
