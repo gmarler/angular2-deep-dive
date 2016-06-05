@@ -38,5 +38,8 @@ export class SearchBarComponent implements AfterViewInit {
     clicks = clicks.filter(event => !event.altKey && !event.shiftKey && !event.ctrlKey && event.button === 0 );
     let [enterStrokes, letterStrokes] = [strokes.filter(event => event.keyCode === 13), strokes.filter(event => !event.altKey && !event.ctrlKey && event.keyCode >= 32)];
     letterStrokes = letterStrokes.debounceTime(300);
+    let clicksString = clicks.map(event => this.searchInput.nativeElement.value as string);
+    let enterStrokesString = enterStrokes.map(event => this.searchInput.nativeElement.value as string);
+    let letterStrokesString = letterStrokes.map(event => this.searchInput.nativeElement.value as string);
   }
 }
