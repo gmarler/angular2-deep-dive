@@ -18,7 +18,7 @@ import {Track} from '../tracks/track.model';
     BUTTONS
   ]
 })
-export class SearchBarComponent implements AfterViewInit {
+export class SearchBarComponent implements AfterViewInit, OnDestroy {
   @Input() term = '';
   @Output() termChange = new EventEmitter<string>();
   @Output('search-complete') complete = new EventEmitter<Track[]>();
@@ -44,6 +44,10 @@ export class SearchBarComponent implements AfterViewInit {
     let searchRequests = Observable.merge(clicksString, enterStrokesString, letterStrokesString)
       .distinctUntilChanged()
       .switchMap(searchValue => this.searchService.search(searchValue));
-    searchRequests.subscribe(tracks => this.complete.emit(tracks));
+    this.subscription = searchRequests.subscribe(tracks => this.complete.emit(tracks));
+  }
+
+  ngOnDestroy() {
+    this.subscription.unsubscribe();
   }
 }
